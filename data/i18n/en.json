@@ -10,8 +10,9 @@
   "hero": {
     "greeting": "👋 Hi, I'm",
     "role": "AI Engineer & Software Developer",
-    "intro": "Software developer focused on AI. I build real systems — RAG pipelines, reinforcement-learning agents, and web & mobile apps — and apply AI deliberately, where it measurably makes a difference. My focus is clean architecture over buzzwords.",
-    "badges": ["🎓 M.Sc. AI — Goethe University", "🚀 Founder @ Beautify", "📍 Frankfurt / Haibach"],
+    "intro": "I build software with a focus on AI, automation and modern digital products. From RAG pipelines and reinforcement-learning agents to web and mobile apps, I build systems that don't just work technically but also serve a clear purpose.",
+    "intro2": "My focus is on clean architecture, well-thought-out workflows and the meaningful use of AI in the development process. To me, good software today no longer comes from more code alone, but from the right combination of structure, product understanding and intelligent tools.",
+    "badges": ["🎓 M.Sc. AI — Goethe University", "🚀 Founder @ Beautify", "📍 Frankfurt / Aschaffenburg"],
     "contact": "Get in touch"
   },
   "about": {
