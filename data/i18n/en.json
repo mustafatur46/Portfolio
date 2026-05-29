@@ -13,7 +13,8 @@
     "intro": "I build software with a focus on AI — from RAG pipelines and reinforcement-learning agents to web and mobile apps. My focus is clean architecture and the meaningful use of AI in the development process: good software comes not from more code, but from the right structure and the right tools.",
     "intro2": "",
     "badges": ["🎓 M.Sc. AI — Goethe University", "🚀 Founder @ Beautify", "📍 Frankfurt / Aschaffenburg"],
-    "contact": "Get in touch"
+    "contact": "Get in touch",
+    "chat": "Chat with me"
   },
   "about": {
     "heading": "About",

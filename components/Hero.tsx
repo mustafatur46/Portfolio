@@ -70,6 +70,14 @@ export default function Hero() {
             LinkedIn ↗
           </a>
         </div>
+
+        <a
+          href="#chatbot"
+          className="inline-flex items-center gap-1.5 mt-5 text-[0.9rem] text-[#a855f7] hover:text-[#c084fc] transition-colors no-underline group/chat"
+        >
+          💬 {t.hero.chat}
+          <span className="transition-transform group-hover/chat:translate-y-0.5">↓</span>
+        </a>
       </div>
     </section>
   );

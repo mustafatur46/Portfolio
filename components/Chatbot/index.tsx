@@ -35,7 +35,10 @@ export default function Chatbot() {
   const taRef     = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // Don't scroll on initial mount (would jump the page to the chatbot);
+    // only once a conversation has actually started.
+    if (messages.length === 0 && !loading) return;
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, [messages, loading]);
 
   async function send(text: string) {
