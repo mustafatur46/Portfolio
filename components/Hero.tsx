@@ -28,12 +28,14 @@ export default function Hero() {
           {t.hero.role}
         </p>
 
-        <p className="text-[#888] text-[1.05rem] max-w-[620px] mb-4 leading-[1.8]">
+        <p className="text-[#888] text-[1.05rem] max-w-[620px] mb-7 leading-[1.8]">
           {t.hero.intro}
         </p>
-        <p className="text-[#888] text-[1.05rem] max-w-[620px] mb-7 leading-[1.8]">
-          {t.hero.intro2}
-        </p>
+        {t.hero.intro2 && (
+          <p className="text-[#888] text-[1.05rem] max-w-[620px] mb-7 leading-[1.8] -mt-3">
+            {t.hero.intro2}
+          </p>
+        )}
 
         <div className="flex flex-wrap gap-2.5 mb-8">
           {t.hero.badges.map(b => (

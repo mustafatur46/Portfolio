@@ -10,8 +10,8 @@
   "hero": {
     "greeting": "👋 Hi, ich bin",
     "role": "AI Engineer & Software Developer",
-    "intro": "Ich entwickle Software mit Schwerpunkt auf KI, Automatisierung und modernen digitalen Produkten. Von RAG-Pipelines und Reinforcement-Learning-Agenten bis hin zu Web- und Mobile-Apps baue ich Systeme, die nicht nur technisch funktionieren, sondern auch einen klaren Zweck erfüllen.",
-    "intro2": "Mein Fokus liegt auf sauberer Architektur, gut durchdachten Workflows und dem sinnvollen Einsatz von KI im Entwicklungsprozess. Für mich entsteht gute Software heute nicht mehr nur durch mehr Code, sondern durch die richtige Kombination aus Struktur, Produktverständnis und intelligenten Tools.",
+    "intro": "Ich baue Software mit Schwerpunkt KI — von RAG-Pipelines und Reinforcement-Learning-Agenten bis zu Web- und Mobile-Apps. Mein Fokus liegt auf sauberer Architektur und dem sinnvollen Einsatz von KI im Entwicklungsprozess: gute Software entsteht nicht durch mehr Code, sondern durch die richtige Struktur und die richtigen Tools.",
+    "intro2": "",
     "badges": ["🎓 M.Sc. KI — Goethe-Uni", "🚀 Gründer @ Beautify", "📍 Frankfurt / Aschaffenburg"],
     "contact": "Kontakt aufnehmen"
   },
