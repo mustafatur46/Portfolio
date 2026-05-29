@@ -1,0 +1,188 @@
+{
+  "nav": {
+    "chatbot": "Chatbot",
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "github": "GitHub",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "👋 Hi, I'm",
+    "role": "AI Engineer & Software Developer",
+    "intro": "Software developer focused on AI. I build real systems — RAG pipelines, reinforcement-learning agents, and web & mobile apps — and apply AI deliberately, where it measurably makes a difference. My focus is clean architecture over buzzwords.",
+    "badges": ["🎓 M.Sc. AI — Goethe University", "🚀 Founder @ Beautify", "📍 Frankfurt / Haibach"],
+    "contact": "Get in touch"
+  },
+  "about": {
+    "heading": "About",
+    "p1Pre": "I'm a software developer from Bavaria, currently doing my M.Sc. in Computer Science with a focus on Artificial Intelligence at Goethe University Frankfurt. Alongside my studies I'm building ",
+    "p1Link": "Beautify",
+    "p1Post": " — a mobile app for beauty bookings that I built from the ground up.",
+    "p2": "I work with AI-assisted tools like Claude, Cursor and Copilot every day — as an amplifier, not a replacement for understanding. The value comes from clean architecture and clear requirements, not from the prompt alone.",
+    "p3": "I'm looking for an environment where AI is applied in practice and where real systems are built around real requirements.",
+    "skillsLanguages": "Languages",
+    "skillsAiMl": "AI / ML",
+    "skillsTools": "Tools & Stack"
+  },
+  "experience": {
+    "heading": "Experience & Education",
+    "work": "Work",
+    "education": "Education",
+    "items": [
+      {
+        "date": "May 2026 – present",
+        "title": "Intern, Process Optimization",
+        "company": "Deutsches Institut für Interne Revision e.V.",
+        "description": "Process optimization with IT means: analyzing, structuring and streamlining internal workflows — business analysis meets a software background."
+      },
+      {
+        "date": "Sep 2025 – present",
+        "title": "Founder — Beautify",
+        "company": "beautify-app.de",
+        "description": "Mobile marketplace for beauty bookings — built from zero. Real-time booking, integrated payments, local provider acquisition. Solo-driven from MVP to launch."
+      },
+      {
+        "date": "Summer 2026 – ongoing",
+        "title": "Master of Science — Computer Science",
+        "company": "Goethe University Frankfurt am Main",
+        "description": "Specialization: Artificial Intelligence."
+      },
+      {
+        "date": "Apr 2022 – Aug 2025",
+        "title": "Working Student, Software Development",
+        "company": "Bühler Group — Alzenau",
+        "description": "3+ years in the Center of Process Applications: web apps with Django/SQL, KPI dashboards with Power BI, automated processes with Power Automate."
+      },
+      {
+        "date": "Sep 2021 – Sep 2025",
+        "title": "Bachelor of Science — Software Design",
+        "company": "Aschaffenburg University of Applied Sciences",
+        "description": "Focus on Data Science. Thesis: reinforcement learning for adaptive traffic control (Python, SUMO, PPO)."
+      },
+      {
+        "date": "Sep 2018 – Jul 2021",
+        "title": "Abitur (High School Diploma)",
+        "company": "Hanns-Seidel-Gymnasium — Hösbach",
+        "description": ""
+      }
+    ]
+  },
+  "projectsSection": {
+    "heading": "Projects",
+    "intro": "Pick a project on the left — its real architecture diagram appears on the right, derived straight from the source code. Zoom, drag, or hit ⤢ for fullscreen.",
+    "sidebar": "Projects",
+    "architecture": "Architecture",
+    "overview": "Overview",
+    "keyDecisions": "Key Decisions",
+    "techStack": "Tech Stack",
+    "links": "Links",
+    "fullscreen": "Fullscreen",
+    "noDiagramTitle": "Architecture diagram coming soon",
+    "noDiagramBody": "No detailed diagram is on file for this project (yet) — see the overview below."
+  },
+  "github": {
+    "heading": "GitHub",
+    "intro": "All public repos — loaded automatically from the GitHub API. No manual upkeep.",
+    "viewProfile": "View profile ↗",
+    "showAll": "Show all {n} repos ↓",
+    "showLess": "Show less ↑",
+    "error": "Couldn't load GitHub repos — GitHub API rate limit or network error.",
+    "errorLink": "View directly on GitHub ↗",
+    "noDescription": "No description",
+    "archived": "archived"
+  },
+  "chatbot": {
+    "heading": "Musti's Chatbot",
+    "intro": "Questions about my background, skills or projects? Just ask — the bot knows me well. 🤖",
+    "welcome": "👋 Hey! I'm Musti's Chatbot — ask me anything about Mustafa: background, projects, skills, or just who he is. Let's go! 🚀",
+    "placeholder": "Ask me a question about Mustafa...",
+    "error": "Error",
+    "connError": "⚠️ Connection error — please try again.",
+    "footer": "Powered by Gemini 2.5 Flash · RAG pipeline · built by Mustafa",
+    "source": "Source ↗",
+    "chips": [
+      { "label": "🎯 What are you applying for?", "q": "What are you currently applying for and what kind of role are you looking for next?" },
+      { "label": "🎓 Your background", "q": "What is your educational and professional background?" },
+      { "label": "💻 Tech stack", "q": "Which technologies and programming languages do you work with?" },
+      { "label": "🤝 AI pair programming", "q": "What do you think of AI pair programming and how do you use AI when developing?" }
+    ]
+  },
+  "projects": {
+    "chatbot": {
+      "title": "Portfolio Chatbot",
+      "period": "2025",
+      "short": "RAG pipeline: Gemini embeddings, NumPy vector search, Flask serverless",
+      "full": "Full RAG pipeline: user query → Gemini Embedding 001 (RETRIEVAL_QUERY) → cosine similarity via NumPy → top-3 chunks → Gemini 2.5 Flash with a guardrail system prompt. A deliberate decision against an external vector database: the index is built offline from profile.md and committed to the repo as JSON — loaded into a normalized NumPy matrix at cold start and cached at module level. Deployed as a Flask WSGI serverless function on Vercel — no persistent server, no running costs.",
+      "notes": [
+        "No vector-DB server: precomputed JSON, loaded as a normalized NumPy matrix at cold start & cached at module level (warm invocations)",
+        "Cosine similarity = dot product of normalized vectors — a single NumPy matmul",
+        "task_type RETRIEVAL_DOCUMENT (index) vs. RETRIEVAL_QUERY (question) for better retrieval quality",
+        "Guardrail in the system prompt: playfully declines off-topic questions, answers in the language of the question"
+      ]
+    },
+    "rl-traffic": {
+      "title": "RL Traffic Control",
+      "period": "2025",
+      "short": "Weather-aware MaskablePPO agent for adaptive traffic-light control in SUMO",
+      "full": "Bachelor's thesis: a reinforcement-learning agent controls a 4-phase traffic light (junction J13) in the SUMO simulator via the TraCI API. Trained with MaskablePPO (sb3-contrib): an ActionMasker hides invalid phase switches, a TrafficLightManager enforces min-green, yellow and red-yellow phases. Curriculum learning across 4 levels (HDF5-backed, automatic level-up) and a weather-aware model: real Open-Meteo data (rain/snow/fog) is translated into SUMO vehicle parameters via an empirical friction and visibility model. Hyperparameter search via Optuna, vectorized parallel simulation (SubprocVecEnv), TensorBoard logging and checkpoint resume.",
+      "notes": [
+        "MaskablePPO instead of vanilla PPO: the ActionMasker masks invalid actions (e.g. holding a phase during a yellow transition)",
+        "Weather-aware: real Open-Meteo JSONs → empirical friction/visibility model → setMaxSpeed/Accel/Tau/MinGap per vehicle",
+        "Curriculum over 4 levels with HDF5 performance tracking; level-up tied to reward, wait, slope, violation & teleport rate",
+        "Reward combines waiting time, Δ waiting time, queue, fairness (std across groups), teleport and violation penalties — weights scale per level",
+        "SubprocVecEnv for parallel SUMO instances, Optuna HPO, automatic checkpoint resume"
+      ]
+    },
+    "beautify": {
+      "title": "Beautify",
+      "period": "2025 – present",
+      "short": "Escrow marketplace for beauty bookings — Expo, Supabase, Stripe Connect",
+      "full": "My own startup: a mobile marketplace for beauty services with escrow payments. A single React Native codebase on Expo runs on iOS and Android. The backend is Supabase (Postgres, Auth, Row Level Security); payments go through Stripe Connect as escrow: the amount is held at booking time and only paid out to the provider after the service is delivered. Solo-driven from MVP to launch — product, tech and business in one person.",
+      "notes": [
+        "Escrow: the amount is authorized/held at booking and only paid out to the provider after confirmed service (Stripe Connect)",
+        "One Expo/React Native codebase → iOS + Android from a single source",
+        "Supabase as the backend: Postgres + Auth + Row Level Security; Stripe calls run server-side via Edge Functions (secrets stay safe)",
+        "Stripe Connect manages provider accounts & marketplace payouts"
+      ]
+    },
+    "cicd": {
+      "title": "CI/CD Vulnerability Detection",
+      "period": "2024",
+      "short": "GitLab-CI DevSecOps: SAST/SCA/DAST against 2 apps → Angular vuln dashboard",
+      "full": "DevSecOps pipelines (GitLab CI) for two applications: the intentionally vulnerable OWASP Juice Shop (Node.js) and a ToDo-list app from the professors (Java/Maven). On every push the code runs through the same security gates: Semgrep (SAST), Gitleaks (secret scan), OWASP Dependency-Check (SCA of dependencies), Trivy (container/filesystem scan) and OWASP ZAP (DAST against the deployed container). Each stage exports JSON/SARIF reports, which a self-built Angular dashboard aggregates: number of vulnerabilities, type and name (incl. ID) and — where available — a link to the fix. Scheduled pipelines (cron) additionally clear the caches (global + Dependency-Check).",
+      "notes": [
+        "Two targets, same pipeline: OWASP Juice Shop (Node.js) + the professors' ToDo list (Java/Maven)",
+        "Security gates: Semgrep (SAST) · Gitleaks (secrets) · OWASP Dependency-Check (SCA) · Trivy (container/FS) · OWASP ZAP (DAST)",
+        "Stages: build → test → SAST → SCA → publish (Docker) → container scan → DAST → deploy",
+        "Scheduled pipeline (cron, rules: schedule) clears the global & Dependency-Check caches; for the ToDo app the DAST scan also ran on a schedule",
+        "All reports (JSON/SARIF) → Angular dashboard: count, vulnerability name + ID, link to the fix"
+      ]
+    },
+    "rl-slotcar": {
+      "title": "RL Slot-Car",
+      "period": "2023 – 2024",
+      "short": "Autonomous slot car: top-down webcam + OpenCV tracking → DQN/PPO → digital pot",
+      "full": "An RL agent drives a real slot car autonomously. A top-down webcam films the track; image processing (OpenCV) converts each frame to black & white and keeps only green — so the green-painted car is reliably detected. As a first step the car drives frame by frame to map out the track. The agent then outputs a continuous speed value between 0 and 100, which regulates the motor speed via a digital potentiometer. Autonomous driving was trained first with Deep Q-Learning, then with a PPO approach.",
+      "notes": [
+        "Top-down webcam + OpenCV: each frame is converted to B/W and only green is kept → the green-painted car is unambiguously trackable",
+        "Step 1: the car drives frame by frame → the track is mapped (environment setup)",
+        "Agent output = continuous speed value 0–100, regulated via a digital potentiometer (hardware-in-the-loop)",
+        "Autonomous driving trained first with Deep Q-Learning, then with a PPO approach"
+      ]
+    },
+    "idle-game": {
+      "title": "Idle City Game",
+      "period": "2023 – 2024",
+      "short": "Cookie-Clicker-style idle game in Unity/C#: Eco-Points → city upgrades on a tilemap",
+      "full": "Idle game (Cookie-Clicker genre) in Unity/C#: with the digital currency \"Eco-Points\" you buy upgrades that grow a city rebuilt as a tilemap (Aschaffenburg) — trees, flowers, charging stations, bike lanes. Deliberately object-oriented & data-driven: each upgrade is an UpgradeObject instance (cost, eco/s, level, allowed tilemap areas), so new upgrades need no code change. EcoPoints generates the currency per second (the idle mechanic), PrestigeSystem grants a reset multiplier, GameManager saves/loads and computes offline earnings. UI built with Unity UI Toolkit, assets hand-drawn. Created in a software-engineering project with full requirements engineering & user testing.",
+      "notes": [
+        "Eco-Points = digital currency: EcoPoints generates it per second (idle mechanic) and settles purchases (ApplyUpgrade/SpendEcoPoints)",
+        "Object-oriented & dynamic: each upgrade is an UpgradeObject instance (cost, eco/s, level, allowed tilemap bounds) — new upgrades without code changes",
+        "Main places the upgrade tiles via vector bounds (randomly within allowed areas) on the tilemap — the city grows visibly",
+        "PrestigeSystem: reset for a permanent multiplier; GameManager saves/loads and computes offline earnings",
+        "UI with Unity UI Toolkit (UIDocument); buttons grey = unaffordable, blue = affordable; hand-drawn cartoon assets"
+      ]
+    }
+  }
+}

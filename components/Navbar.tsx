@@ -1,18 +1,20 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-
-const links = [
-  { href: '#chatbot',    label: 'Chatbot' },
-  { href: '#about',      label: 'About' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#projects',   label: 'Projects' },
-  { href: '#github',     label: 'GitHub' },
-];
+import { useI18n } from './i18n';
+import LangSwitch from './LangSwitch';
 
 export default function Navbar() {
+  const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
+
+  const links = [
+    { href: '#chatbot',    label: t.nav.chatbot },
+    { href: '#about',      label: t.nav.about },
+    { href: '#experience', label: t.nav.experience },
+    { href: '#projects',   label: t.nav.projects },
+    { href: '#github',     label: t.nav.github },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -32,21 +34,24 @@ export default function Navbar() {
         <a href="#hero" className="text-[1.25rem] font-bold text-[#a855f7] tracking-wide no-underline">
           MT
         </a>
-        <div className="flex items-center gap-8">
-          {links.map(l => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-[#888] text-sm hover:text-white transition-colors no-underline"
-            >
-              {l.label}
-            </a>
-          ))}
+        <div className="flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-8">
+            {links.map(l => (
+              <a
+                key={l.href}
+                href={l.href}
+                className="text-[#888] text-sm hover:text-white transition-colors no-underline"
+              >
+                {l.label}
+              </a>
+            ))}
+          </div>
+          <LangSwitch />
           <a
             href="mailto:mustafa.turhal08@gmail.com"
             className="bg-[#a855f7] text-white text-[0.85rem] font-semibold px-4 py-1.5 rounded-[8px] hover:opacity-85 transition-opacity no-underline"
           >
-            Kontakt
+            {t.nav.contact}
           </a>
         </div>
       </div>

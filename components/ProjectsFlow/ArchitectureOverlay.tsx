@@ -2,24 +2,22 @@
 
 import { useEffect } from 'react';
 import ArchitectureCanvas from './ArchitectureCanvas';
-import type { Project } from '@/types/project';
+import type { Architecture } from '@/types/project';
 
 interface Props {
-  project: Project;
+  architecture: Architecture;
+  title: string;
+  label: string;
   color: string;
   onClose: () => void;
 }
 
-export default function ArchitectureOverlay({ project, color, onClose }: Props) {
-  const arch = project.architecture;
-
+export default function ArchitectureOverlay({ architecture, title, label, color, onClose }: Props) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
-
-  if (!arch) return null;
 
   return (
     <div
@@ -41,9 +39,9 @@ export default function ArchitectureOverlay({ project, color, onClose }: Props) 
         <div className="flex items-center justify-between px-6 py-3.5 flex-shrink-0 border-b border-white/[0.06]">
           <div>
             <p className="text-[0.62rem] font-bold uppercase tracking-[1.5px]" style={{ color }}>
-              Architektur
+              {label}
             </p>
-            <h3 className="text-white font-bold text-[1rem] leading-tight">{project.title}</h3>
+            <h3 className="text-white font-bold text-[1rem] leading-tight">{title}</h3>
           </div>
           <button
             onClick={onClose}
@@ -55,7 +53,7 @@ export default function ArchitectureOverlay({ project, color, onClose }: Props) 
         </div>
 
         <div className="flex-1 min-h-0">
-          <ArchitectureCanvas architecture={arch} color={color} fitKey={project.id} />
+          <ArchitectureCanvas architecture={architecture} color={color} />
         </div>
       </div>
     </div>

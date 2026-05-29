@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useI18n } from './i18n';
 
 // GitHub language → brand color
 const LANG_COLORS: Record<string, string> = {
@@ -45,6 +46,7 @@ function timeAgo(iso: string): string {
 }
 
 function RepoCard({ repo }: { repo: Repo }) {
+  const { t } = useI18n();
   const lc = repo.language ? LANG_COLORS[repo.language] : null;
 
   return (
@@ -71,7 +73,7 @@ function RepoCard({ repo }: { repo: Repo }) {
         </div>
         {repo.archived && (
           <span className="flex-shrink-0 text-[0.62rem] font-semibold uppercase tracking-widest px-1.5 py-0.5 rounded-full bg-[#f59e0b]/10 text-[#f59e0b] border border-[#f59e0b]/20">
-            archived
+            {t.github.archived}
           </span>
         )}
       </div>
@@ -79,7 +81,7 @@ function RepoCard({ repo }: { repo: Repo }) {
       {/* Description */}
       <p className="text-[0.78rem] text-[#666] leading-relaxed line-clamp-2 flex-1">
         {repo.description ?? (
-          <span className="italic text-[#3a3a3a]">No description</span>
+          <span className="italic text-[#3a3a3a]">{t.github.noDescription}</span>
         )}
       </p>
 
@@ -134,6 +136,7 @@ function RepoCard({ repo }: { repo: Repo }) {
 }
 
 export default function GitHubActivity() {
+  const { t } = useI18n();
   const [repos, setRepos]       = useState<Repo[]>([]);
   const [loading, setLoading]   = useState(true);
   const [error, setError]       = useState<string | null>(null);
@@ -168,11 +171,10 @@ export default function GitHubActivity() {
               className="font-bold mb-2 bg-gradient-to-br from-white to-[#a855f7] bg-clip-text text-transparent"
               style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}
             >
-              GitHub
+              {t.github.heading}
             </h2>
             <p className="text-[#888] text-[1.05rem] max-w-[520px]">
-              Alle öffentlichen Repos — automatisch vom GitHub-API geladen. Kein
-              manuelles Nachpflegen.
+              {t.github.intro}
             </p>
           </div>
           <a
@@ -184,7 +186,7 @@ export default function GitHubActivity() {
             <svg className="w-4 h-4" viewBox="0 0 16 16" fill="currentColor">
               <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
             </svg>
-            Profil anzeigen ↗
+            {t.github.viewProfile}
           </a>
         </div>
 
@@ -204,7 +206,7 @@ export default function GitHubActivity() {
         {!loading && error && (
           <div className="text-center py-12">
             <p className="text-[#555] text-[0.9rem]">
-              Konnte GitHub-Repos nicht laden — GitHub API Rate-Limit oder Netzwerkfehler.
+              {t.github.error}
             </p>
             <a
               href="https://github.com/mustafatur46"
@@ -212,7 +214,7 @@ export default function GitHubActivity() {
               rel="noopener noreferrer"
               className="mt-3 inline-block text-[#a855f7] text-[0.85rem] hover:underline"
             >
-              Direkt auf GitHub anzeigen ↗
+              {t.github.errorLink}
             </a>
           </div>
         )}
@@ -233,8 +235,8 @@ export default function GitHubActivity() {
                   className="bg-white/[0.04] border border-white/[0.09] text-[#888] text-[0.85rem] font-medium px-6 py-2.5 rounded-[10px] hover:border-white/20 hover:text-white transition-all"
                 >
                   {showAll
-                    ? 'Weniger anzeigen ↑'
-                    : `Alle ${repos.length} Repos anzeigen ↓`}
+                    ? t.github.showLess
+                    : t.github.showAll.replace('{n}', String(repos.length))}
                 </button>
               </div>
             )}

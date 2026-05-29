@@ -1,4 +1,10 @@
+'use client';
+
+import { useI18n } from './i18n';
+
 export default function Hero() {
+  const { t } = useI18n();
+
   return (
     <section
       id="hero"
@@ -11,7 +17,7 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 max-w-[1100px] mx-auto px-6 w-full">
-        <p className="text-[#a855f7] text-lg font-medium mb-3">👋 Hey, ich bin</p>
+        <p className="text-[#a855f7] text-lg font-medium mb-3">{t.hero.greeting}</p>
 
         <h1 className="font-extrabold leading-[1.05] tracking-[-1px] mb-3 bg-gradient-to-br from-white via-white to-[#a855f7] bg-clip-text text-transparent"
             style={{ fontSize: 'clamp(2.8rem, 7vw, 5.5rem)' }}>
@@ -19,17 +25,15 @@ export default function Hero() {
         </h1>
 
         <p className="text-[#888] mb-5 font-light" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
-          AI Engineer &amp; Software Developer
+          {t.hero.role}
         </p>
 
         <p className="text-[#888] text-[1.05rem] max-w-[580px] mb-7 leading-[1.8]">
-          Ich glaube daran, dass die Zukunft des Entwickelns{' '}
-          <strong className="text-white">AI-augmented</strong> ist —
-          nicht Werkzeug-gläubig, sondern architektur-getrieben. KI als Verstärker, nicht als Abkürzung.
+          {t.hero.intro}
         </p>
 
         <div className="flex flex-wrap gap-2.5 mb-8">
-          {['🎓 Master KI — Goethe-Uni', '🚀 Founder @ Beautify', '📍 Frankfurt / Haibach'].map(b => (
+          {t.hero.badges.map(b => (
             <span
               key={b}
               className="bg-white/5 border border-white/[0.09] rounded-full px-3.5 py-1 text-[0.82rem] text-[#888] backdrop-blur-md"
@@ -44,7 +48,7 @@ export default function Hero() {
             href="mailto:mustafa.turhal08@gmail.com"
             className="bg-[#a855f7] text-white px-6 py-2.5 rounded-[10px] font-semibold text-[0.95rem] hover:opacity-85 transition-opacity no-underline shadow-[0_0_24px_rgba(168,85,247,0.25)]"
           >
-            Kontakt aufnehmen
+            {t.hero.contact}
           </a>
           <a
             href="https://github.com/mustafatur46"

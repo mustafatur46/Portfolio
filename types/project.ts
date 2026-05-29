@@ -12,7 +12,7 @@ export type ArchKind =
 export interface ArchNode {
   id: string;
   label: string;
-  /** Smaller second line under the label. */
+  /** Smaller second line under the label. Kept technical/neutral (works in DE & EN). */
   sublabel?: string;
   kind?: ArchKind;
   /** Top-left grid position (arbitrary units; the overlay lays them out as given). */
@@ -34,22 +34,20 @@ export interface Architecture {
   nodes: ArchNode[];
   /** Directed edges between nodes. */
   edges: ArchEdge[];
-  /** Key architectural decisions / highlights, shown as accent-colored bullets in the panel. */
-  notes?: string[];
 }
 
+/**
+ * Structural project data only — language-neutral.
+ * Title, descriptions, notes and period live in the i18n files (de.json / en.json)
+ * keyed by `id`; read them via useProjectText(id).
+ */
 export interface Project {
   id: string;
-  title: string;
-  shortDescription: string;
-  fullDescription: string;
   category: Category;
   tags: string[];
-  /** Real architecture pulled from the project's own source — reflected in the detail panel. */
   architecture?: Architecture;
   links?: Array<{ label: string; url: string }>;
   featured?: boolean;
-  period?: string;
 }
 
 export interface CategoryDef {

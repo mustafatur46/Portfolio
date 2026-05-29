@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Navbar from '@/components/Navbar';
+import { LanguageProvider } from '@/components/i18n';
 
 export const metadata: Metadata = {
   title: 'Mustafa Turhal — AI Engineer & Developer',
@@ -12,6 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="de">
       <body className="min-h-screen bg-[#0a0a0a] text-[#f1f1f1]">
+        <LanguageProvider>
         <Navbar />
         {children}
         <footer className="border-t border-white/[0.09] py-8 mt-8">
@@ -30,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </div>
         </footer>
+        </LanguageProvider>
       </body>
     </html>
   );

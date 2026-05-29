@@ -1,0 +1,188 @@
+{
+  "nav": {
+    "chatbot": "Chatbot",
+    "about": "Über mich",
+    "experience": "Werdegang",
+    "projects": "Projekte",
+    "github": "GitHub",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "greeting": "👋 Hi, ich bin",
+    "role": "AI Engineer & Software Developer",
+    "intro": "Software-Entwickler mit Schwerpunkt KI. Ich baue echte Systeme — RAG-Pipelines, Reinforcement-Learning-Agenten sowie Web- und Mobile-Apps — und setze KI gezielt dort ein, wo sie messbar einen Unterschied macht. Mein Fokus liegt auf sauberer Architektur statt auf Buzzwords.",
+    "badges": ["🎓 M.Sc. KI — Goethe-Uni", "🚀 Gründer @ Beautify", "📍 Frankfurt / Haibach"],
+    "contact": "Kontakt aufnehmen"
+  },
+  "about": {
+    "heading": "Über mich",
+    "p1Pre": "Ich bin Software-Entwickler aus Bayern und studiere aktuell im Master Informatik mit Spezialisierung Künstliche Intelligenz an der Goethe-Universität Frankfurt. Parallel baue ich ",
+    "p1Link": "Beautify",
+    "p1Post": " auf — eine Mobile-App für Beauty-Buchungen, die ich von Grund auf selbst entwickelt habe.",
+    "p2": "Ich arbeite täglich mit KI-gestützten Tools wie Claude, Cursor und Copilot — als Verstärkung, nicht als Ersatz für Verständnis. Der Wert entsteht aus sauberer Architektur und klaren Anforderungen, nicht aus dem Prompt allein.",
+    "p3": "Ich suche ein Umfeld, in dem KI praktisch eingesetzt wird und in dem echte Systeme mit echten Anforderungen entstehen.",
+    "skillsLanguages": "Sprachen",
+    "skillsAiMl": "AI / ML",
+    "skillsTools": "Tools & Stack"
+  },
+  "experience": {
+    "heading": "Werdegang & Ausbildung",
+    "work": "Beruf",
+    "education": "Ausbildung",
+    "items": [
+      {
+        "date": "Mai 2026 – heute",
+        "title": "Praktikant Prozessoptimierung",
+        "company": "Deutsches Institut für Interne Revision e.V.",
+        "description": "Prozessoptimierung mit IT-Mitteln: interne Abläufe analysieren, strukturieren und effizienter gestalten — Business-Analyse trifft Software-Hintergrund."
+      },
+      {
+        "date": "Sep 2025 – heute",
+        "title": "Gründer — Beautify",
+        "company": "beautify-app.de",
+        "description": "Mobile Marketplace für Beauty-Buchungen — von 0 aufgebaut. Echtzeit-Booking, integriertes Payment, lokale Anbieter-Akquise. Vom MVP bis zum Launch alleine gesteuert."
+      },
+      {
+        "date": "SS 2026 – laufend",
+        "title": "Master of Science — Informatik",
+        "company": "Goethe-Universität Frankfurt am Main",
+        "description": "Spezialisierung: Künstliche Intelligenz."
+      },
+      {
+        "date": "Apr 2022 – Aug 2025",
+        "title": "Werkstudent Softwareentwicklung",
+        "company": "Bühler Group — Alzenau",
+        "description": "3+ Jahre im Center of Process Applications: Web-Apps mit Django/SQL, KPI-Dashboards mit Power BI, automatisierte Prozesse mit Power Automate."
+      },
+      {
+        "date": "Sep 2021 – Sep 2025",
+        "title": "Bachelor of Science — Software Design",
+        "company": "Technische Hochschule Aschaffenburg",
+        "description": "Schwerpunkt Data Science. Bachelorarbeit: Reinforcement Learning für adaptive Verkehrssteuerung (Python, SUMO, PPO)."
+      },
+      {
+        "date": "Sep 2018 – Jul 2021",
+        "title": "Abitur",
+        "company": "Hanns-Seidel-Gymnasium — Hösbach",
+        "description": ""
+      }
+    ]
+  },
+  "projectsSection": {
+    "heading": "Projekte",
+    "intro": "Wähl links ein Projekt — rechts erscheint sein echtes Architektur-Diagramm, direkt aus dem Quellcode abgeleitet. Drauf zoomen, ziehen oder per ⤢ in den Vollbild-Modus.",
+    "sidebar": "Projekte",
+    "architecture": "Architektur",
+    "overview": "Overview",
+    "keyDecisions": "Key Decisions",
+    "techStack": "Tech Stack",
+    "links": "Links",
+    "fullscreen": "Vollbild",
+    "noDiagramTitle": "Architektur-Diagramm folgt",
+    "noDiagramBody": "Für dieses Projekt ist (noch) kein detailliertes Diagramm hinterlegt — siehe Overview unten."
+  },
+  "github": {
+    "heading": "GitHub",
+    "intro": "Alle öffentlichen Repos — automatisch vom GitHub-API geladen. Kein manuelles Nachpflegen.",
+    "viewProfile": "Profil anzeigen ↗",
+    "showAll": "Alle {n} Repos anzeigen ↓",
+    "showLess": "Weniger anzeigen ↑",
+    "error": "Konnte GitHub-Repos nicht laden — GitHub API Rate-Limit oder Netzwerkfehler.",
+    "errorLink": "Direkt auf GitHub anzeigen ↗",
+    "noDescription": "Keine Beschreibung",
+    "archived": "archiviert"
+  },
+  "chatbot": {
+    "heading": "Musti's Chatbot",
+    "intro": "Du hast Fragen zu meinem Werdegang, meinen Skills oder meinen Projekten? Frag einfach — der Bot kennt mich gut. 🤖",
+    "welcome": "👋 Hey! Ich bin Musti's Chatbot — frag mich alles über Mustafa: Werdegang, Projekte, Skills oder einfach wer er so ist. Los geht's! 🚀",
+    "placeholder": "Stell mir eine Frage über Mustafa...",
+    "error": "Fehler",
+    "connError": "⚠️ Verbindungsfehler — versuch es nochmal.",
+    "footer": "Powered by Gemini 2.5 Flash · RAG-Pipeline · gebaut von Mustafa",
+    "source": "Quellcode ↗",
+    "chips": [
+      { "label": "🎯 Wofür bewirbst du dich?", "q": "Wofür bewirbst du dich gerade und was suchst du dir als nächste Rolle aus?" },
+      { "label": "🎓 Dein Werdegang", "q": "Was war dein schulischer und beruflicher Werdegang?" },
+      { "label": "💻 Tech-Stack", "q": "Welche Technologien und Programmiersprachen beherrschst du?" },
+      { "label": "🤝 AI Pair Programming", "q": "Was hältst du von AI Pair Programming und wie nutzt du KI beim Entwickeln?" }
+    ]
+  },
+  "projects": {
+    "chatbot": {
+      "title": "Portfolio Chatbot",
+      "period": "2025",
+      "short": "RAG-Pipeline: Gemini-Embeddings, NumPy-Vektorsuche, Flask Serverless",
+      "full": "Vollständige RAG-Pipeline: User-Query → Gemini Embedding 001 (RETRIEVAL_QUERY) → Cosine Similarity via NumPy → Top-3 Chunks → Gemini 2.5 Flash mit Guardrail-System-Prompt. Bewusste Entscheidung gegen externe Vektordatenbank: der Index wird offline aus profile.md gebaut und als JSON ins Repo committed — beim Cold Start in eine normalisierte NumPy-Matrix geladen und module-level gecacht. Deployed als Flask-WSGI Serverless Function auf Vercel — kein persistenter Server, keine laufenden Kosten.",
+      "notes": [
+        "Kein Vektor-DB-Server: vorberechnetes JSON, beim Cold Start als normalisierte NumPy-Matrix geladen & module-level gecacht (Warm Invocations)",
+        "Cosine Similarity = Dot-Product normalisierter Vektoren — ein einziges NumPy-matmul",
+        "task_type RETRIEVAL_DOCUMENT (Index) vs. RETRIEVAL_QUERY (Frage) für bessere Retrieval-Qualität",
+        "Guardrail im System-Prompt: lehnt Off-Topic-Fragen spielerisch ab, antwortet in der Sprache der Frage"
+      ]
+    },
+    "rl-traffic": {
+      "title": "RL Verkehrssteuerung",
+      "period": "2025",
+      "short": "Wetter-bewusster MaskablePPO-Agent für adaptive Ampelsteuerung in SUMO",
+      "full": "Bachelorarbeit: Reinforcement-Learning-Agent steuert eine 4-Phasen-Ampel (Kreuzung J13) im SUMO-Simulator über die TraCI-API. Trainiert mit MaskablePPO (sb3-contrib): ein ActionMasker blendet ungültige Phasenwechsel aus, ein TrafficLightManager erzwingt Min-Grün, Gelb- und Rot-Gelb-Phasen. Curriculum Learning über 4 Level (HDF5-gestützt, automatischer Level-Up) und ein wetter-bewusstes Modell: echte Open-Meteo-Daten (Regen/Schnee/Nebel) werden über ein empirisches Reibungs- und Sichtmodell in SUMO-Fahrzeugparameter übersetzt. Hyperparameter-Suche via Optuna, vektorisierte parallele Simulation (SubprocVecEnv), TensorBoard-Logging und Checkpoint-Resume.",
+      "notes": [
+        "MaskablePPO statt Vanilla-PPO: ActionMasker maskiert ungültige Aktionen (z.B. Phasen-Hold während Gelb-Übergang)",
+        "Wetter-bewusst: echte Open-Meteo-JSONs → empirisches Reibungs-/Sichtmodell → setMaxSpeed/Accel/Tau/MinGap pro Fahrzeug",
+        "Curriculum über 4 Level mit HDF5-Performance-Tracking; Level-Up an Reward, Wait, Slope, Violation- & Teleport-Rate gekoppelt",
+        "Reward kombiniert Wartezeit, Δ-Wartezeit, Queue, Fairness (std über Gruppen), Teleport- und Violation-Penalty — Gewichte skalieren pro Level",
+        "SubprocVecEnv für parallele SUMO-Instanzen, Optuna-HPO, automatischer Checkpoint-Resume"
+      ]
+    },
+    "beautify": {
+      "title": "Beautify",
+      "period": "2025 – heute",
+      "short": "Escrow-Marketplace für Beauty-Buchungen — Expo, Supabase, Stripe Connect",
+      "full": "Eigene Gründung: Mobile Marketplace für Beauty-Dienstleistungen mit Escrow-Payment. Ein React-Native-Codebase auf Expo läuft auf iOS und Android. Backend ist Supabase (Postgres, Auth, Row Level Security); Zahlungen laufen über Stripe Connect als Escrow: der Betrag wird bei Buchung gehalten und erst nach erbrachter Dienstleistung an den Anbieter ausgezahlt. Vom MVP bis zum Launch alleine gesteuert — Product, Tech und Business in einer Person.",
+      "notes": [
+        "Escrow: Betrag wird bei Buchung autorisiert/gehalten und erst nach bestätigter Dienstleistung an den Anbieter ausgezahlt (Stripe Connect)",
+        "Ein Expo/React-Native-Codebase → iOS + Android aus einer Quelle",
+        "Supabase als Backend: Postgres + Auth + Row Level Security; Stripe-Calls laufen serverseitig über Edge Functions (Secrets bleiben sicher)",
+        "Stripe Connect verwaltet Anbieter-Konten & Marketplace-Auszahlungen"
+      ]
+    },
+    "cicd": {
+      "title": "CI/CD Vulnerability Detection",
+      "period": "2024",
+      "short": "GitLab-CI DevSecOps: SAST/SCA/DAST gegen 2 Apps → Angular-Vuln-Dashboard",
+      "full": "DevSecOps-Pipelines (GitLab CI) für zwei Anwendungen: die bewusst verwundbare OWASP Juice Shop (Node.js) und eine ToDo-List-App der Profs (Java/Maven). Bei jedem Push durchläuft der Code dieselben Security-Gates: Semgrep (SAST), Gitleaks (Secret-Scan), OWASP Dependency-Check (SCA der Dependencies), Trivy (Container-/Filesystem-Scan) und OWASP ZAP (DAST gegen den deployten Container). Jede Stage exportiert JSON/SARIF-Reports, die ein selbst gebautes Angular-Dashboard aggregiert: Anzahl der Schwachstellen, Art und Name (inkl. ID) sowie — falls vorhanden — die Verlinkung zur Lösung. Geplante Pipelines (cron) leeren zusätzlich die Caches (global + Dependency-Check).",
+      "notes": [
+        "Zwei Targets, gleiche Pipeline: OWASP Juice Shop (Node.js) + ToDo-List der Profs (Java/Maven)",
+        "Security-Gates: Semgrep (SAST) · Gitleaks (Secrets) · OWASP Dependency-Check (SCA) · Trivy (Container/FS) · OWASP ZAP (DAST)",
+        "Stages: build → test → SAST → SCA → publish (Docker) → container-scan → DAST → deploy",
+        "Scheduled Pipeline (cron, rules: schedule) leert global- & Dependency-Check-Caches; bei der ToDo-App lief der DAST-Scan ebenfalls per Schedule",
+        "Alle Reports (JSON/SARIF) → Angular-Dashboard: Anzahl, Vulnerability-Name + ID, Verlinkung zur Lösung"
+      ]
+    },
+    "rl-slotcar": {
+      "title": "RL Slot-Car",
+      "period": "2023 – 2024",
+      "short": "Autonomes Slot-Car: Top-down-Webcam + OpenCV-Tracking → DQN/PPO → digitales Poti",
+      "full": "RL-Agent fährt ein echtes Slot-Car autonom. Eine Top-down-Webcam filmt die Bahn; per Bildverarbeitung (OpenCV) wird jeder Frame in Schwarz-Weiß gewandelt und nur Grün behalten — das grün lackierte Auto wird so zuverlässig erkannt. Im ersten Schritt fährt das Auto Frame für Frame ab, um die Strecke abzubilden. Der Agent gibt dann einen kontinuierlichen Speed-Wert zwischen 0 und 100 aus, der über ein digitales Potentiometer die Motorgeschwindigkeit regelt. Autonomes Fahren erst mit Deep Q-Learning, dann mit einem PPO-Ansatz trainiert.",
+      "notes": [
+        "Top-down-Webcam + OpenCV: jeder Frame wird S/W gewandelt und nur Grün behalten → das grün lackierte Auto ist eindeutig trackbar",
+        "Schritt 1: Auto fährt Frame für Frame ab → die Strecke wird abgebildet (Environment-Aufbau)",
+        "Agent-Output = kontinuierlicher Speed-Wert 0–100, geregelt über ein digitales Potentiometer (Hardware-in-the-loop)",
+        "Autonomes Fahren erst mit Deep Q-Learning, danach mit PPO-Ansatz trainiert"
+      ]
+    },
+    "idle-game": {
+      "title": "Idle City Game",
+      "period": "2023 – 2024",
+      "short": "Cookie-Clicker-artiges Idle Game in Unity/C#: Eco-Punkte → Stadt-Upgrades auf Tilemap",
+      "full": "Idle Game (Cookie-Clicker-Genre) in Unity/C#: mit der digitalen Währung „Eco-Punkte\" kauft man Upgrades, die eine als Tilemap nachgebaute Stadt (Aschaffenburg) wachsen lassen — Bäume, Blumen, Ladestationen, Fahrradwege. Bewusst objektorientiert & dynamisch: jedes Upgrade ist eine UpgradeObject-Instanz (Kosten, Eco/s, Level, erlaubte Tilemap-Bereiche), neue Upgrades brauchen keinen Code-Change. EcoPoints generiert die Währung pro Sekunde (Idle-Mechanik), PrestigeSystem gibt einen Reset-Multiplier, GameManager speichert/lädt und berechnet Offline-Earnings. UI mit Unity UI Toolkit, Assets selbst gezeichnet. Entstanden im Software-Engineering-Projekt mit vollständigem Requirements Engineering & User Testing.",
+      "notes": [
+        "Eco-Punkte = digitale Währung: EcoPoints generiert sie pro Sekunde (Idle-Mechanik) und verrechnet Käufe (ApplyUpgrade/SpendEcoPoints)",
+        "Objektorientiert & dynamisch: jedes Upgrade ist eine UpgradeObject-Instanz (cost, eco/s, level, erlaubte Tilemap-Bounds) — neue Upgrades ohne Code-Änderung",
+        "Main platziert die Upgrade-Tiles per Vektor-Bounds (zufällig in erlaubten Bereichen) auf der Tilemap — die Stadt wächst sichtbar",
+        "PrestigeSystem: Reset für dauerhaften Multiplier; GameManager speichert/lädt und berechnet Offline-Earnings",
+        "UI mit Unity UI Toolkit (UIDocument); Buttons grau = nicht leistbar, blau = kaufbar; selbst gezeichnete Cartoon-Assets"
+      ]
+    }
+  }
+}
