@@ -1,26 +1,39 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useI18n } from './i18n';
 import LangSwitch from './LangSwitch';
 
 const SECTION_IDS = ['chatbot', 'about', 'experience', 'projects', 'github'];
+const NAV_H = 64;
 
 export default function Navbar() {
   const { t } = useI18n();
-  const [scrolled, setScrolled] = useState(false);
-  const [navHidden, setNavHidden] = useState(false);
   const [active, setActive] = useState('');
+  const navRef = useRef<HTMLElement>(null);
 
+  // Gradual hide: the bar is pushed up proportionally to downward scroll
+  // (clamped to its own height) and revealed proportionally on the way up.
+  // Initialised from the current scroll position so a reload mid-page is correct.
   useEffect(() => {
+    const el = navRef.current;
     let last = window.scrollY;
+    let hide = Math.max(0, Math.min(NAV_H, window.scrollY));
+    const apply = () => { if (el) el.style.transform = `translateY(${-hide}px)`; };
+    apply();
+
+    let ticking = false;
     const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 12);
-      if (y < 80) setNavHidden(false);            // always show near the top
-      else if (y > last + 4) setNavHidden(true);  // scrolling down → hide
-      else if (y < last - 4) setNavHidden(false); // scrolling up → show
-      last = y;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        hide = Math.max(0, Math.min(NAV_H, hide + (y - last)));
+        if (y <= 0) hide = 0;
+        last = y;
+        apply();
+        ticking = false;
+      });
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -46,11 +59,8 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 h-16 transition-[transform,background-color,border-color] duration-300 ${
-        navHidden ? '-translate-y-full' : 'translate-y-0'
-      } ${
-        scrolled ? 'bg-black/80 backdrop-blur-xl border-b border-white/[0.07]' : 'border-b border-transparent'
-      }`}
+      ref={navRef}
+      className="fixed top-0 left-0 right-0 z-50 h-16 bg-black/80 backdrop-blur-xl border-b border-white/[0.07] will-change-transform"
     >
       <div className="max-w-[1180px] mx-auto px-6 h-full flex items-center justify-between gap-4">
         {/* Logo */}
@@ -60,11 +70,8 @@ export default function Navbar() {
         </a>
 
         {/* Center pill nav */}
-        <div
-          className={`hidden md:flex items-center gap-1 rounded-full border border-white/[0.1] p-1 transition-all duration-300 ${
-            scrolled ? 'bg-black/60 backdrop-blur-xl glow' : 'bg-white/[0.03]'
-          }`}
-        >
+        <div className="hidden md:flex items-center gap-1 rounded-full border border-white/[0.1] bg-white/[0.05] p-1">
+
           {links.map(l => {
             const isActive = active === l.id;
             return (
