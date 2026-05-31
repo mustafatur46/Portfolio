@@ -9,10 +9,19 @@ const SECTION_IDS = ['chatbot', 'about', 'experience', 'projects', 'github'];
 export default function Navbar() {
   const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
+  const [navHidden, setNavHidden] = useState(false);
   const [active, setActive] = useState('');
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 12);
+      if (y < 80) setNavHidden(false);            // always show near the top
+      else if (y > last + 4) setNavHidden(true);  // scrolling down → hide
+      else if (y < last - 4) setNavHidden(false); // scrolling up → show
+      last = y;
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -36,7 +45,13 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 h-16">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 h-16 transition-[transform,background-color,border-color] duration-300 ${
+        navHidden ? '-translate-y-full' : 'translate-y-0'
+      } ${
+        scrolled ? 'bg-black/80 backdrop-blur-xl border-b border-white/[0.07]' : 'border-b border-transparent'
+      }`}
+    >
       <div className="max-w-[1180px] mx-auto px-6 h-full flex items-center justify-between gap-4">
         {/* Logo */}
         <a href="#hero" className="leading-[0.95] no-underline shrink-0">
