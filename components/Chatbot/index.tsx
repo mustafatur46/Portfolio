@@ -65,9 +65,9 @@ export default function Chatbot() {
   }
 
   return (
-    <section id="chatbot" className="py-24 bg-[#a855f7]/[0.03]">
+    <section id="chatbot" className="py-24">
       <div className="max-w-[1100px] mx-auto px-6">
-        <h2 className="font-bold mb-2 bg-gradient-to-br from-white to-[#a855f7] bg-clip-text text-transparent"
+        <h2 className="section-title mb-2"
             style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
           {cb.heading}
         </h2>
@@ -85,7 +85,7 @@ export default function Chatbot() {
                   key={c.label}
                   onClick={() => send(c.q)}
                   disabled={loading}
-                  className="bg-[#a855f7]/10 border border-[#a855f7]/25 text-[#c084fc] text-[0.8rem] px-3.5 py-1.5 rounded-full hover:bg-[#a855f7]/20 hover:border-[#a855f7]/50 transition-colors whitespace-nowrap disabled:opacity-40"
+                  className="bg-white/[0.04] border border-white/[0.1] text-[#aaa] text-[0.8rem] px-3.5 py-1.5 rounded-full hover:bg-white/[0.08] hover:border-white/25 hover:text-white transition-colors whitespace-nowrap disabled:opacity-40"
                 >
                   {c.label}
                 </button>
@@ -106,7 +106,7 @@ export default function Chatbot() {
                 <div
                   className={`max-w-[78%] text-[0.9rem] leading-relaxed px-4 py-2.5 rounded-[12px] ${
                     m.role === 'user'
-                      ? 'bg-[#a855f7] text-white rounded-br-[4px]'
+                      ? 'bg-white/[0.13] border border-white/[0.12] text-white rounded-br-[4px]'
                       : 'bg-white/[0.06] border border-white/[0.09] text-white rounded-bl-[4px]'
                   }`}
                 >
@@ -142,12 +142,12 @@ export default function Chatbot() {
               placeholder={cb.placeholder}
               rows={1}
               maxLength={1000}
-              className="flex-1 bg-white/5 border border-white/[0.09] rounded-[10px] px-3.5 py-2.5 text-white text-[0.9rem] resize-none outline-none placeholder-[#555] focus:border-[#a855f7] transition-colors max-h-[120px] font-[inherit] disabled:opacity-40"
+              className="flex-1 bg-white/5 border border-white/[0.09] rounded-[10px] px-3.5 py-2.5 text-white text-[0.9rem] resize-none outline-none placeholder-[#555] focus:border-white/30 transition-colors max-h-[120px] font-[inherit] disabled:opacity-40"
             />
             <button
               onClick={() => send(input)}
               disabled={loading || !input.trim()}
-              className="w-[38px] h-[38px] flex-shrink-0 bg-[#a855f7] rounded-[9px] text-white text-xl flex items-center justify-center hover:opacity-80 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
+              className="w-[38px] h-[38px] flex-shrink-0 bg-white/[0.1] border border-white/[0.14] rounded-[9px] text-white text-xl flex items-center justify-center hover:bg-white/[0.18] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             >
               ↑
             </button>
@@ -156,7 +156,7 @@ export default function Chatbot() {
 
         <p className="text-center text-[#555] text-[0.78rem] mt-4">
           {cb.footer} ·{' '}
-          <a href="https://github.com/mustafatur46/ChatBot" target="_blank" rel="noopener noreferrer" className="text-[#666] hover:text-[#a855f7] transition-colors">
+          <a href="https://github.com/mustafatur46/ChatBot" target="_blank" rel="noopener noreferrer" className="text-[#666] hover:text-white transition-colors">
             {cb.source}
           </a>
         </p>

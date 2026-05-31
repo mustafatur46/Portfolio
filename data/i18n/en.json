@@ -10,6 +10,8 @@
   "hero": {
     "greeting": "👋 Hi, I'm",
     "role": "AI Engineer & Software Developer",
+    "headline": "AI Engineer.",
+    "headlineAccent": "I build architectures.",
     "intro": "I build software with a focus on AI — from RAG pipelines and reinforcement-learning agents to web and mobile apps. My focus is clean architecture and the meaningful use of AI in the development process: good software comes not from more code, but from the right structure and the right tools.",
     "intro2": "",
     "badges": ["🎓 M.Sc. AI — Goethe University", "🚀 Founder @ Beautify", "📍 Frankfurt / Aschaffenburg"],

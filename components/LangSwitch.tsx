@@ -17,7 +17,7 @@ export default function LangSwitch() {
           className="px-2.5 py-1 rounded-full text-[0.72rem] font-bold uppercase tracking-wide transition-all"
           style={
             lang === l
-              ? { background: '#a855f7', color: '#fff' }
+              ? { background: 'rgba(255,255,255,0.92)', color: '#000' }
               : { background: 'transparent', color: '#888' }
           }
         >

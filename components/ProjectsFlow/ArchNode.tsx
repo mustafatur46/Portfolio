@@ -7,12 +7,12 @@ export const ARCH_NODE_W = 168;
 export const ARCH_NODE_H = 60;
 
 const KIND: Record<ArchKind, { color: string; tag: string }> = {
-  client:  { color: '#3b82f6', tag: 'Client'   },
-  server:  { color: '#a855f7', tag: 'Server'    },
-  service: { color: '#f59e0b', tag: 'Service'   },
-  data:    { color: '#10b981', tag: 'Data'      },
-  process: { color: '#22d3ee', tag: 'Process'   },
-  sim:     { color: '#ec4899', tag: 'Simulator' },
+  client:  { color: '#6f8cae', tag: 'Client'   },
+  server:  { color: '#e3a857', tag: 'Server'    },
+  service: { color: '#cf7257', tag: 'Service'   },
+  data:    { color: '#88a36b', tag: 'Data'      },
+  process: { color: '#5fa3a0', tag: 'Process'   },
+  sim:     { color: '#c2a878', tag: 'Simulator' },
 };
 
 export interface ArchNodeData {

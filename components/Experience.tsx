@@ -19,27 +19,27 @@ export default function Experience() {
   return (
     <section id="experience" className="py-24">
       <div className="max-w-[1100px] mx-auto px-6">
-        <h2 className="font-bold mb-10 bg-gradient-to-br from-white to-[#a855f7] bg-clip-text text-transparent"
+        <h2 className="section-title mb-10"
             style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
           {t.experience.heading}
         </h2>
 
         <div className="relative flex flex-col gap-5">
-          <div className="absolute left-[11px] top-1.5 bottom-1.5 w-[2px] bg-gradient-to-b from-[#a855f7] to-transparent hidden md:block" />
+          <div className="absolute left-[11px] top-1.5 bottom-1.5 w-[2px] bg-gradient-to-b from-[#e3a857] to-transparent hidden md:block" />
 
           {items.map((item, i) => {
             const companyUrl = 'companyUrl' in item ? item.companyUrl : undefined;
             return (
               <div key={i} className="grid grid-cols-1 md:grid-cols-[24px_1fr] gap-5 items-start">
-                <div className="hidden md:block w-3 h-3 rounded-full bg-[#a855f7] mt-6 shadow-[0_0_10px_rgba(168,85,247,0.4)]" />
+                <div className="hidden md:block w-3 h-3 rounded-full bg-[#e3a857] mt-6 shadow-[0_0_10px_rgba(251,191,36,0.4)]" />
 
                 <div className="bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-5">
                   <div className="flex items-center justify-between mb-2">
                     <span
                       className={`text-[0.7rem] font-bold uppercase tracking-[1px] px-2 py-0.5 rounded-[5px] ${
                         item.type === 'work'
-                          ? 'bg-[#a855f7]/15 text-[#c084fc]'
-                          : 'bg-[#2563eb]/15 text-[#60a5fa]'
+                          ? 'bg-[#e3a857]/15 text-[#efc78a]'
+                          : 'bg-[#5fa3a0]/15 text-[#86c2bf]'
                       }`}
                     >
                       {item.type === 'work' ? t.experience.work : t.experience.education}
@@ -51,11 +51,11 @@ export default function Experience() {
 
                   {companyUrl ? (
                     <a href={companyUrl} target="_blank" rel="noopener noreferrer"
-                       className="text-[0.85rem] text-[#a855f7] mb-2 block hover:underline">
+                       className="text-[0.85rem] text-[#e3a857] mb-2 block hover:underline">
                       {item.company} ↗
                     </a>
                   ) : (
-                    <p className="text-[0.85rem] text-[#a855f7] mb-2">{item.company}</p>
+                    <p className="text-[0.85rem] text-[#e3a857] mb-2">{item.company}</p>
                   )}
 
                   {item.description && (

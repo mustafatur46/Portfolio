@@ -2,22 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useI18n } from './i18n';
-
-// GitHub language → brand color
-const LANG_COLORS: Record<string, string> = {
-  Python:         '#3572A5',
-  JavaScript:     '#f1e05a',
-  TypeScript:     '#3178c6',
-  Java:           '#b07219',
-  'C#':           '#178600',
-  HTML:           '#e34c26',
-  CSS:            '#563d7c',
-  Dart:           '#00B4AB',
-  'Jupyter Notebook': '#da5b0b',
-  Shell:          '#89e051',
-  Go:             '#00ADD8',
-  Rust:           '#dea584',
-};
+import { toneFor } from '@/data/palette';
 
 interface Repo {
   id:               number;
@@ -47,7 +32,7 @@ function timeAgo(iso: string): string {
 
 function RepoCard({ repo }: { repo: Repo }) {
   const { t } = useI18n();
-  const lc = repo.language ? LANG_COLORS[repo.language] : null;
+  const lc = repo.language ? toneFor(repo.language) : null;
 
   return (
     <a
@@ -67,7 +52,7 @@ function RepoCard({ repo }: { repo: Repo }) {
           >
             <path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8Z" />
           </svg>
-          <span className="text-[0.85rem] font-semibold text-white truncate group-hover:text-[#a855f7] transition-colors">
+          <span className="text-[0.85rem] font-semibold text-white truncate group-hover:text-[#e3a857] transition-colors">
             {repo.name}
           </span>
         </div>
@@ -91,7 +76,7 @@ function RepoCard({ repo }: { repo: Repo }) {
           {repo.topics.slice(0, 4).map(t => (
             <span
               key={t}
-              className="text-[0.63rem] px-1.5 py-[2px] rounded-full bg-[#a855f7]/10 border border-[#a855f7]/20 text-[#c084fc]"
+              className="text-[0.63rem] px-1.5 py-[2px] rounded-full bg-[#e3a857]/10 border border-[#e3a857]/20 text-[#efc78a]"
             >
               {t}
             </span>
@@ -168,7 +153,7 @@ export default function GitHubActivity() {
         <div className="flex items-end justify-between gap-4 mb-8 flex-wrap">
           <div>
             <h2
-              className="font-bold mb-2 bg-gradient-to-br from-white to-[#a855f7] bg-clip-text text-transparent"
+              className="section-title mb-2"
               style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}
             >
               {t.github.heading}
@@ -212,7 +197,7 @@ export default function GitHubActivity() {
               href="https://github.com/mustafatur46"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 inline-block text-[#a855f7] text-[0.85rem] hover:underline"
+              className="mt-3 inline-block text-[#e3a857] text-[0.85rem] hover:underline"
             >
               {t.github.errorLink}
             </a>

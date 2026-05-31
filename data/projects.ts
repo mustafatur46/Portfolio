@@ -3,10 +3,10 @@ import { Project, CategoryDef } from '@/types/project';
 // ─── Kategorie-Definitionen ──────────────────────────────────────────────────
 // Jede Kategorie liefert die Farbe für die Projekt-Punkte/Akzente.
 export const CATEGORIES: CategoryDef[] = [
-  { id: 'ai-ml',    label: 'AI / ML',   icon: '🤖', color: '#a855f7' },
-  { id: 'web',      label: 'Web Dev',   icon: '🌐', color: '#3b82f6' },
-  { id: 'mobile',   label: 'Mobile',    icon: '📱', color: '#10b981' },
-  { id: 'research', label: 'Research',  icon: '🔬', color: '#f59e0b' },
+  { id: 'ai-ml',    label: 'AI / ML',   icon: '🤖', color: '#e3a857' },
+  { id: 'web',      label: 'Web Dev',   icon: '🌐', color: '#6f8cae' },
+  { id: 'mobile',   label: 'Mobile',    icon: '📱', color: '#88a36b' },
+  { id: 'research', label: 'Research',  icon: '🔬', color: '#cf7257' },
 ];
 
 // ─── Projekte (nur Struktur) ─────────────────────────────────────────────────

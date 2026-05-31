@@ -5,14 +5,7 @@ import ArchitectureCanvas from './ArchitectureCanvas';
 import ArchitectureOverlay from './ArchitectureOverlay';
 import { PROJECTS, CATEGORIES } from '@/data/projects';
 import { useI18n, type ProjectText } from '@/components/i18n';
-
-const LANG_COLORS: Record<string, string> = {
-  Python: '#3572A5', JavaScript: '#f1e05a', TypeScript: '#3178c6',
-  Java: '#b07219', 'C#': '#178600', HTML: '#e34c26', CSS: '#563d7c',
-  'React Native': '#61dafb', 'Next.js': '#e2e8f0', Django: '#44b78b',
-  Angular: '#dd0031', Flutter: '#54c5f8', Unity: '#cccccc', SQL: '#e38c00',
-  Expo: '#000020', Supabase: '#3ecf8e', 'Stripe Connect': '#635bff',
-};
+import { toneFor } from '@/data/palette';
 
 export default function ProjectsFlow() {
   const { t } = useI18n();
@@ -24,13 +17,13 @@ export default function ProjectsFlow() {
 
   const p     = PROJECTS.find(pr => pr.id === selectedId) ?? PROJECTS[0];
   const cat   = CATEGORIES.find(c => c.id === p.category);
-  const color = cat?.color ?? '#a855f7';
+  const color = cat?.color ?? '#e3a857';
   const txt   = text[p.id];
 
   return (
     <div>
       <h2
-        className="font-bold mb-3 bg-gradient-to-br from-white to-[#a855f7] bg-clip-text text-transparent"
+        className="section-title mb-3"
         style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}
       >
         {ps.heading}
@@ -46,7 +39,7 @@ export default function ProjectsFlow() {
           <div className="flex md:flex-col gap-2 overflow-x-auto md:overflow-visible pb-2 md:pb-0">
             {PROJECTS.map(pr => {
               const prCat   = CATEGORIES.find(c => c.id === pr.category);
-              const prColor = prCat?.color ?? '#a855f7';
+              const prColor = prCat?.color ?? '#e3a857';
               const active  = pr.id === selectedId;
               const prTxt   = text[pr.id];
               return (
@@ -161,7 +154,7 @@ export default function ProjectsFlow() {
               <p className="text-[0.66rem] font-bold uppercase tracking-[1.5px] text-[#444] mb-2.5">{ps.techStack}</p>
               <div className="flex flex-wrap gap-1.5">
                 {p.tags.map(tag => {
-                  const lc = LANG_COLORS[tag];
+                  const lc = toneFor(tag);
                   return (
                     <span
                       key={tag}

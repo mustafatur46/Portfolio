@@ -1,6 +1,13 @@
 import type { Metadata } from 'next';
+import '@fontsource/victor-mono/400.css';
+import '@fontsource/victor-mono/500.css';
+import '@fontsource/victor-mono/700.css';
+import '@fontsource/victor-mono/400-italic.css';
+import '@fontsource/victor-mono/500-italic.css';
 import './globals.css';
 import Navbar from '@/components/Navbar';
+import Starfield from '@/components/Starfield';
+import Cursor from '@/components/Cursor';
 import { LanguageProvider } from '@/components/i18n';
 
 export const metadata: Metadata = {
@@ -12,7 +19,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="de">
-      <body className="min-h-screen bg-[#0a0a0a] text-[#f1f1f1]">
+      <body className="min-h-screen bg-black text-[#e6e6e6]">
+        <Starfield />
+        <Cursor />
         <LanguageProvider>
         <Navbar />
         {children}
@@ -20,13 +29,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="max-w-[1100px] mx-auto px-6 flex flex-wrap items-center justify-between gap-4">
             <p className="text-[#555] text-[0.85rem]">© 2026 Mustafa Turhal</p>
             <div className="flex gap-6">
-              <a href="mailto:mustafa.turhal08@gmail.com" className="text-[#555] text-[0.85rem] hover:text-[#a855f7] transition-colors no-underline">
+              <a href="mailto:mustafa.turhal08@gmail.com" className="text-[#555] text-[0.85rem] hover:text-[#e3a857] transition-colors no-underline">
                 mustafa.turhal08@gmail.com
               </a>
-              <a href="https://github.com/mustafatur46" target="_blank" rel="noopener noreferrer" className="text-[#555] text-[0.85rem] hover:text-[#a855f7] transition-colors no-underline">
+              <a href="https://github.com/mustafatur46" target="_blank" rel="noopener noreferrer" className="text-[#555] text-[0.85rem] hover:text-[#e3a857] transition-colors no-underline">
                 GitHub
               </a>
-              <a href="https://linkedin.com/in/mustafa-turhal-9963ba26a" target="_blank" rel="noopener noreferrer" className="text-[#555] text-[0.85rem] hover:text-[#a855f7] transition-colors no-underline">
+              <a href="https://linkedin.com/in/mustafa-turhal-9963ba26a" target="_blank" rel="noopener noreferrer" className="text-[#555] text-[0.85rem] hover:text-[#e3a857] transition-colors no-underline">
                 LinkedIn
               </a>
             </div>
