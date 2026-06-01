@@ -17,24 +17,19 @@ export default function Experience() {
   const { t } = useI18n();
   const items = t.experience.items.map((txt, idx) => ({ ...META[idx], ...txt }));
   const n = items.length;
-  // virtual list with wrap clones: [last, ...items, first] → seamless infinite loop
-  const virtual = [items[n - 1], ...items, items[0]];
 
-  const [vi, setVi] = useState(n);             // desktop: start on most recent (real n-1)
-  const [noAnim, setNoAnim] = useState(false); // disable track anim for seamless jump
-  const [popKey, setPopKey] = useState(0);     // bumps on a full loop → dot "pops"
+  // ── Mobile carousel state (infinite loop, starts at the oldest entry) ──────────
+  const virtual = [items[n - 1], ...items, items[0]];
+  const [vi, setVi] = useState(1);
+  const [noAnim, setNoAnim] = useState(false);
+  const [popKey, setPopKey] = useState(0);
   const [barInstant, setBarInstant] = useState(false);
   const touchX = useRef(0);
-
-  // On mobile, start the timeline at the oldest entry (Abitur) rather than today
-  useEffect(() => {
-    if (window.matchMedia('(max-width: 767px)').matches) setVi(1);
-  }, []);
 
   const real = ((vi - 1) % n + n) % n;
   const progress = n > 1 ? (real / (n - 1)) * 100 : 0;
 
-  const fireWrap = () => {                       // loop boundary: jump bar + pop the dot
+  const fireWrap = () => {
     setBarInstant(true);
     setPopKey(k => k + 1);
     setTimeout(() => setBarInstant(false), 60);
@@ -45,8 +40,8 @@ export default function Experience() {
 
   const onTrackEnd = (e: React.TransitionEvent) => {
     if (e.target !== e.currentTarget || e.propertyName !== 'transform') return;
-    if (vi === n + 1) { setNoAnim(true); setVi(1); }       // past last clone → real first
-    else if (vi === 0) { setNoAnim(true); setVi(n); }      // before first clone → real last
+    if (vi === n + 1) { setNoAnim(true); setVi(1); }
+    else if (vi === 0) { setNoAnim(true); setVi(n); }
   };
   useEffect(() => {
     if (!noAnim) return;
@@ -67,96 +62,50 @@ export default function Experience() {
     </button>
   );
 
+  // ── Desktop: original vertical timeline, newest first ──────────────────────────
+  const listItems = [...items].reverse();
+
   return (
     <section id="experience" className="py-16 md:py-24">
       <div className="max-w-[1100px] mx-auto px-5 sm:px-6">
-        <h2 className="section-title mb-7 md:mb-8" style={{ fontSize: 'clamp(1.7rem, 4vw, 2.5rem)' }}>
+        <h2 className="section-title mb-7 md:mb-10" style={{ fontSize: 'clamp(1.7rem, 4vw, 2.5rem)' }}>
           {t.experience.heading}
         </h2>
 
-        {/* Shooting-star timeline bar (left = oldest, right = today) */}
-        <div className="relative h-[3px] rounded-full bg-white/[0.07] mt-2 mb-7">
-          <div
-            className={`absolute left-0 top-0 h-full rounded-full ${barTrans}`}
-            style={{ width: `${progress}%`, background: 'linear-gradient(to right, rgba(227,168,87,0.12), #e3a857)' }}
-          />
-          {items.map((_, idx) => {
-            const pos = n > 1 ? (idx / (n - 1)) * 100 : 0;
-            return (
-              <button
-                key={idx}
-                onClick={() => goReal(idx)}
-                aria-label={`${idx + 1}`}
-                className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 flex items-center justify-center"
-                style={{ left: `${pos}%` }}
-              >
-                <span className="w-[6px] h-[6px] rounded-full transition-colors" style={{ background: idx <= real ? '#e3a857' : 'rgba(255,255,255,0.22)' }} />
-              </button>
-            );
-          })}
-          <div className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 ${barTrans}`} style={{ left: `${progress}%` }}>
-            <span
-              key={popKey}
-              className={`block w-2.5 h-2.5 rounded-full bg-[#f0c479] shadow-[0_0_10px_3px_rgba(227,168,87,0.45)] ${popKey > 0 ? 'animate-dot-pop' : ''}`}
-            />
-          </div>
-        </div>
-
-        {/* Infinite carousel — neighbours peek on both sides (incl. wrap-around) */}
-        <div
-          className="overflow-hidden"
-          style={{ ['--cw' as string]: 'clamp(210px, 62vw, 760px)' }}
-          onTouchStart={e => { touchX.current = e.touches[0].clientX; }}
-          onTouchEnd={e => {
-            const dx = e.changedTouches[0].clientX - touchX.current;
-            if (dx < -40) next();
-            else if (dx > 40) prev();
-          }}
-        >
-          <div
-            className={`flex gap-4 items-stretch ${trackTrans}`}
-            style={{ transform: `translateX(calc((100% - var(--cw)) / 2 - ${vi} * (var(--cw) + 1rem)))` }}
-            onTransitionEnd={onTrackEnd}
-          >
-            {virtual.map((it, vIdx) => {
-              const isC = vIdx === vi;
-              const cu = 'companyUrl' in it ? it.companyUrl : undefined;
+        {/* ── DESKTOP: vertical timeline list ─────────────────────────────────── */}
+        <div className="hidden md:block">
+          <div className="relative flex flex-col gap-5">
+            <div className="absolute left-[11px] top-1.5 bottom-1.5 w-[2px] bg-gradient-to-b from-[#e3a857] to-transparent" />
+            {listItems.map((item, idx) => {
+              const cu = 'companyUrl' in item ? item.companyUrl : undefined;
               return (
-                <div
-                  key={vIdx}
-                  onClick={() => { if (vIdx === vi + 1) next(); else if (vIdx === vi - 1) prev(); }}
-                  className={`w-[var(--cw)] shrink-0 transition-opacity duration-300 ${isC ? '' : 'opacity-40 cursor-pointer'}`}
-                >
-                  <div className={`h-full flex flex-col justify-center bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-5 sm:p-6 ${isC ? '' : 'pointer-events-none select-none'}`}>
-                    <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
+                <div key={idx} className="grid grid-cols-[24px_1fr] gap-5 items-start">
+                  <div className="w-3 h-3 rounded-full bg-[#e3a857] mt-6 shadow-[0_0_10px_rgba(227,168,87,0.4)]" />
+                  <div className="bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-5">
+                    <div className="flex items-center justify-between mb-2">
                       <span
                         className={`text-[0.7rem] font-bold uppercase tracking-[1px] px-2 py-0.5 rounded-[5px] ${
-                          it.type === 'work' ? 'bg-[#e3a857]/15 text-[#efc78a]' : 'bg-[#5fa3a0]/15 text-[#86c2bf]'
+                          item.type === 'work' ? 'bg-[#e3a857]/15 text-[#efc78a]' : 'bg-[#5fa3a0]/15 text-[#86c2bf]'
                         }`}
                       >
-                        {it.type === 'work' ? t.experience.work : t.experience.education}
+                        {item.type === 'work' ? t.experience.work : t.experience.education}
                       </span>
-                      <span className="text-[0.78rem] text-[#555]">{it.date}</span>
+                      <span className="text-[0.78rem] text-[#555]">{item.date}</span>
                     </div>
-
-                    <h3 className="text-[1.05rem] sm:text-[1.15rem] font-semibold text-white mb-0.5">{it.title}</h3>
-
+                    <h3 className="text-[1.05rem] font-semibold text-white mb-0.5">{item.title}</h3>
                     {cu ? (
-                      <a href={cu} target="_blank" rel="noopener noreferrer"
-                         className="text-[0.85rem] text-[#e3a857] mb-2 block hover:underline">
-                        {it.company} ↗
+                      <a href={cu} target="_blank" rel="noopener noreferrer" className="text-[0.85rem] text-[#e3a857] mb-2 block hover:underline">
+                        {item.company} ↗
                       </a>
                     ) : (
-                      <p className="text-[0.85rem] text-[#e3a857] mb-2">{it.company}</p>
+                      <p className="text-[0.85rem] text-[#e3a857] mb-2">{item.company}</p>
                     )}
-
-                    {it.description && (
-                      <p className="text-[0.88rem] text-[#888] leading-relaxed">{it.description}</p>
+                    {item.description && (
+                      <p className="text-[0.88rem] text-[#888] leading-relaxed">{item.description}</p>
                     )}
-
-                    {it.tags.length > 0 && (
+                    {item.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 mt-3">
-                        {it.tags.map(tag => (
+                        {item.tags.map(tag => (
                           <span key={tag} className="text-[0.75rem] px-2 py-0.5 rounded-[5px] bg-white/[0.06] border border-white/[0.09] text-[#888]">
                             {tag}
                           </span>
@@ -170,13 +119,104 @@ export default function Experience() {
           </div>
         </div>
 
-        {/* Controls */}
-        <div className="flex items-center justify-center gap-5 mt-5">
-          <Arrow onClick={prev} glyph="‹" />
-          <span className="text-[0.8rem] font-mono text-[#666] tabular-nums">
-            {String(real + 1).padStart(2, '0')} / {String(n).padStart(2, '0')}
-          </span>
-          <Arrow onClick={next} glyph="›" />
+        {/* ── MOBILE: infinite carousel with shooting-star timeline bar ────────── */}
+        <div className="md:hidden">
+          <div className="relative h-[3px] rounded-full bg-white/[0.07] mt-2 mb-7">
+            <div
+              className={`absolute left-0 top-0 h-full rounded-full ${barTrans}`}
+              style={{ width: `${progress}%`, background: 'linear-gradient(to right, rgba(227,168,87,0.12), #e3a857)' }}
+            />
+            {items.map((_, idx) => {
+              const pos = n > 1 ? (idx / (n - 1)) * 100 : 0;
+              return (
+                <button
+                  key={idx}
+                  onClick={() => goReal(idx)}
+                  aria-label={`${idx + 1}`}
+                  className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 flex items-center justify-center"
+                  style={{ left: `${pos}%` }}
+                >
+                  <span className="w-[6px] h-[6px] rounded-full transition-colors" style={{ background: idx <= real ? '#e3a857' : 'rgba(255,255,255,0.22)' }} />
+                </button>
+              );
+            })}
+            <div className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 ${barTrans}`} style={{ left: `${progress}%` }}>
+              <span
+                key={popKey}
+                className={`block w-2.5 h-2.5 rounded-full bg-[#f0c479] shadow-[0_0_10px_3px_rgba(227,168,87,0.45)] ${popKey > 0 ? 'animate-dot-pop' : ''}`}
+              />
+            </div>
+          </div>
+
+          <div
+            className="overflow-hidden"
+            style={{ ['--cw' as string]: 'clamp(210px, 62vw, 760px)' }}
+            onTouchStart={e => { touchX.current = e.touches[0].clientX; }}
+            onTouchEnd={e => {
+              const dx = e.changedTouches[0].clientX - touchX.current;
+              if (dx < -40) next();
+              else if (dx > 40) prev();
+            }}
+          >
+            <div
+              className={`flex gap-4 items-stretch ${trackTrans}`}
+              style={{ transform: `translateX(calc((100% - var(--cw)) / 2 - ${vi} * (var(--cw) + 1rem)))` }}
+              onTransitionEnd={onTrackEnd}
+            >
+              {virtual.map((it, vIdx) => {
+                const isC = vIdx === vi;
+                const cu = 'companyUrl' in it ? it.companyUrl : undefined;
+                return (
+                  <div
+                    key={vIdx}
+                    onClick={() => { if (vIdx === vi + 1) next(); else if (vIdx === vi - 1) prev(); }}
+                    className={`w-[var(--cw)] shrink-0 transition-opacity duration-300 ${isC ? '' : 'opacity-40 cursor-pointer'}`}
+                  >
+                    <div className={`h-full flex flex-col justify-center bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-5 ${isC ? '' : 'pointer-events-none select-none'}`}>
+                      <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
+                        <span
+                          className={`text-[0.7rem] font-bold uppercase tracking-[1px] px-2 py-0.5 rounded-[5px] ${
+                            it.type === 'work' ? 'bg-[#e3a857]/15 text-[#efc78a]' : 'bg-[#5fa3a0]/15 text-[#86c2bf]'
+                          }`}
+                        >
+                          {it.type === 'work' ? t.experience.work : t.experience.education}
+                        </span>
+                        <span className="text-[0.78rem] text-[#555]">{it.date}</span>
+                      </div>
+                      <h3 className="text-[1.05rem] font-semibold text-white mb-0.5">{it.title}</h3>
+                      {cu ? (
+                        <a href={cu} target="_blank" rel="noopener noreferrer" className="text-[0.85rem] text-[#e3a857] mb-2 block hover:underline">
+                          {it.company} ↗
+                        </a>
+                      ) : (
+                        <p className="text-[0.85rem] text-[#e3a857] mb-2">{it.company}</p>
+                      )}
+                      {it.description && (
+                        <p className="text-[0.88rem] text-[#888] leading-relaxed">{it.description}</p>
+                      )}
+                      {it.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mt-3">
+                          {it.tags.map(tag => (
+                            <span key={tag} className="text-[0.75rem] px-2 py-0.5 rounded-[5px] bg-white/[0.06] border border-white/[0.09] text-[#888]">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center gap-5 mt-5">
+            <Arrow onClick={prev} glyph="‹" />
+            <span className="text-[0.8rem] font-mono text-[#666] tabular-nums">
+              {String(real + 1).padStart(2, '0')} / {String(n).padStart(2, '0')}
+            </span>
+            <Arrow onClick={next} glyph="›" />
+          </div>
         </div>
       </div>
     </section>

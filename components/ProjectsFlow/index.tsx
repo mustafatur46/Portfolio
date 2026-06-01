@@ -16,7 +16,7 @@ export default function ProjectsFlow() {
   const [fullscreen, setFullscreen] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
-  const select = (id: string) => { setSelectedId(id); setExpanded(false); };
+  const select = (id: string) => setSelectedId(id);  // keep expand state across projects
 
   const p     = PROJECTS.find(pr => pr.id === selectedId) ?? PROJECTS[0];
   const cat   = CATEGORIES.find(c => c.id === p.category);
@@ -83,7 +83,7 @@ export default function ProjectsFlow() {
           className="flex-1 min-w-0 rounded-[16px] border overflow-hidden flex flex-col"
           style={{ background: 'rgba(7,7,7,0.6)', borderColor: `${color}33` }}
         >
-          <div className="h-[3px] flex-shrink-0" style={{ background: `linear-gradient(90deg, ${color}, ${color}50, transparent)` }} />
+          <div className="h-px md:h-[3px] flex-shrink-0" style={{ background: `linear-gradient(90deg, ${color}, ${color}50, transparent)` }} />
 
           {/* Header */}
           <div className="flex items-start justify-between gap-3 px-5 pt-4 pb-3.5 flex-shrink-0 border-b border-white/[0.06]">
