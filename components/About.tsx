@@ -13,29 +13,29 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="py-24">
-      <div className="max-w-[1100px] mx-auto px-6">
-        <h2 className="section-title mb-10"
-            style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
+    <section id="about" className="py-16 md:py-24">
+      <div className="max-w-[1100px] mx-auto px-5 sm:px-6">
+        <h2 className="section-title mb-7 md:mb-10"
+            style={{ fontSize: 'clamp(1.7rem, 4vw, 2.5rem)' }}>
           {t.about.heading}
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-start">
           {/* Text */}
-          <div className="bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-7 flex flex-col gap-4">
-            <p className="text-[#888] leading-[1.8]">
+          <div className="bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-5 sm:p-7 flex flex-col gap-3.5 md:gap-4">
+            <p className="text-[#888] text-[0.92rem] sm:text-base leading-[1.75]">
               {t.about.p1Pre}
               <a href="https://www.beautify-app.de" target="_blank" rel="noopener noreferrer" className="text-[#e3a857] hover:underline">
                 {t.about.p1Link}
               </a>
               {t.about.p1Post}
             </p>
-            <p className="text-[#888] leading-[1.8]">{t.about.p2}</p>
-            <p className="text-[#888] leading-[1.8]">{t.about.p3}</p>
+            <p className="text-[#888] text-[0.92rem] sm:text-base leading-[1.75]">{t.about.p2}</p>
+            <p className="text-[#888] text-[0.92rem] sm:text-base leading-[1.75]">{t.about.p3}</p>
           </div>
 
           {/* Skills */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3.5 md:gap-4">
             {SKILLS.map(s => (
               <div key={s.title} className="bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-5">
                 <h3 className="text-[0.8rem] font-bold uppercase tracking-[1.5px] text-[#e3a857] mb-3">

@@ -117,7 +117,7 @@ export default function ProjectsFlow() {
           </div>
 
           {/* Diagram area */}
-          <div className="relative h-[420px] flex-shrink-0" style={{ background: `${color}06` }}>
+          <div className="relative h-[320px] md:h-[420px] flex-shrink-0" style={{ background: `${color}06` }}>
             {p.architecture ? (
               <ArchitectureCanvas architecture={p.architecture} color={color} fitKey={p.id} />
             ) : (
@@ -130,7 +130,7 @@ export default function ProjectsFlow() {
           </div>
 
           {/* Details */}
-          <div className="px-5 py-5 flex flex-col gap-5 border-t border-white/[0.06]">
+          <div className="px-4 sm:px-5 py-5 flex flex-col gap-5 border-t border-white/[0.06]">
             <div>
               <p className="text-[0.66rem] font-bold uppercase tracking-[1.5px] text-[#444] mb-2">{ps.overview}</p>
               <p className="text-[0.86rem] text-[#aaa] leading-[1.78]">{txt.full}</p>

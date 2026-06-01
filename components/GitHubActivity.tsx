@@ -147,7 +147,7 @@ export default function GitHubActivity() {
   const displayed = showAll ? repos : repos.slice(0, 6);
 
   return (
-    <section id="github" className="py-24">
+    <section id="github" className="py-16 md:py-24">
       <div className="max-w-[1100px] mx-auto px-6">
         {/* Header */}
         <div className="flex items-end justify-between gap-4 mb-8 flex-wrap">

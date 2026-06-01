@@ -65,7 +65,7 @@ export default function Chatbot() {
   }
 
   return (
-    <section id="chatbot" className="py-24">
+    <section id="chatbot" className="py-16 md:py-24">
       <div className="max-w-[1100px] mx-auto px-6">
         <h2 className="section-title mb-2"
             style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>

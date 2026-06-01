@@ -10,24 +10,21 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex items-center overflow-hidden pt-16"
     >
-      <div className="relative z-10 max-w-[1180px] mx-auto px-6 w-full">
-        <p className="text-[#e3a857] text-[0.8rem] font-medium uppercase tracking-[0.35em] mb-6">
+      <div className="relative z-10 max-w-[1180px] mx-auto px-5 sm:px-6 w-full">
+        <p className="text-[#e3a857] text-[0.72rem] sm:text-[0.8rem] font-medium uppercase tracking-[0.3em] sm:tracking-[0.35em] mb-3 sm:mb-6">
           Mustafa Turhal
         </p>
 
-        <h1
-          className="section-title leading-[1.04] mb-6"
-          style={{ fontSize: 'clamp(2.6rem, 7vw, 5rem)' }}
-        >
+        <h1 className="section-title leading-[1.08] sm:leading-[1.04] mb-4 sm:mb-6 text-[2.05rem] sm:text-[2.7rem] md:text-[clamp(2.6rem,7vw,5rem)]">
           {t.hero.headline}{' '}
           <span className="accent-italic">{t.hero.headlineAccent}</span>
         </h1>
 
-        <p className="text-[#7a7a82] text-[1.02rem] max-w-[620px] mb-8 leading-[1.75]">
+        <p className="text-[#7a7a82] text-[0.92rem] sm:text-[1.02rem] max-w-[620px] mb-6 sm:mb-8 leading-[1.7]">
           {t.hero.intro}
         </p>
 
-        <div className="flex flex-wrap gap-2.5 mb-8">
+        <div className="flex flex-wrap gap-2 sm:gap-2.5 mb-6 sm:mb-8">
           {t.hero.badges.map(b => (
             <span
               key={b}

@@ -17,7 +17,7 @@ export default function Home() {
       <Experience />
 
       {/* ── Projects — Architektur-Explorer ────────────────────────────── */}
-      <section id="projects" className="py-24">
+      <section id="projects" className="py-16 md:py-24">
         <div className="max-w-[1100px] mx-auto px-6">
           <ProjectsFlowClient />
         </div>

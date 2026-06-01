@@ -17,7 +17,7 @@ export default function Experience() {
   const items = t.experience.items.map((txt, i) => ({ ...META[i], ...txt }));
 
   return (
-    <section id="experience" className="py-24">
+    <section id="experience" className="py-16 md:py-24">
       <div className="max-w-[1100px] mx-auto px-6">
         <h2 className="section-title mb-10"
             style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)' }}>
