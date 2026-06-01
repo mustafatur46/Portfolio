@@ -126,7 +126,7 @@ export default function Chatbot() {
           </div>
 
           {/* Input bar */}
-          <div className="flex items-end gap-2 p-4 border-t border-white/[0.09]">
+          <div className="flex items-end gap-2 p-3 sm:p-4 border-t border-white/[0.09]">
             <textarea
               ref={taRef}
               value={input}
@@ -142,7 +142,7 @@ export default function Chatbot() {
               placeholder={cb.placeholder}
               rows={1}
               maxLength={1000}
-              className="flex-1 bg-white/5 border border-white/[0.09] rounded-[10px] px-3.5 py-2.5 text-white text-[0.9rem] resize-none outline-none placeholder-[#555] focus:border-white/30 transition-colors max-h-[120px] font-[inherit] disabled:opacity-40"
+              className="flex-1 min-w-0 bg-white/5 border border-white/[0.09] rounded-[10px] px-3 sm:px-3.5 py-2.5 text-white text-[0.85rem] sm:text-[0.9rem] resize-none outline-none placeholder-[#666] focus:border-white/30 transition-colors max-h-[120px] font-[inherit] disabled:opacity-40"
             />
             <button
               onClick={() => send(input)}

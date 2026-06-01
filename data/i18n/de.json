@@ -102,7 +102,7 @@
     "heading": "Musti's Chatbot",
     "intro": "Du hast Fragen zu meinem Werdegang, meinen Skills oder meinen Projekten? Frag einfach — der Bot kennt mich gut. 🤖",
     "welcome": "👋 Hey! Ich bin Musti's Chatbot — frag mich alles über Mustafa: Werdegang, Projekte, Skills oder einfach wer er so ist. Los geht's! 🚀",
-    "placeholder": "Stell mir eine Frage über Mustafa...",
+    "placeholder": "Frag mich über Mustafa…",
     "error": "Fehler",
     "connError": "⚠️ Verbindungsfehler — versuch es nochmal.",
     "footer": "Powered by Gemini 2.5 Flash · RAG-Pipeline · gebaut von Mustafa",

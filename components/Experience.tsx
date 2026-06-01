@@ -20,23 +20,27 @@ export default function Experience() {
   // virtual list with wrap clones: [last, ...items, first] → seamless infinite loop
   const virtual = [items[n - 1], ...items, items[0]];
 
-  const [vi, setVi] = useState(n);             // start on most recent (real n-1)
+  const [vi, setVi] = useState(n);             // desktop: start on most recent (real n-1)
   const [noAnim, setNoAnim] = useState(false); // disable track anim for seamless jump
-  const [wrapDir, setWrapDir] = useState<'fwd' | 'bwd' | null>(null);
+  const [popKey, setPopKey] = useState(0);     // bumps on a full loop → dot "pops"
   const [barInstant, setBarInstant] = useState(false);
   const touchX = useRef(0);
+
+  // On mobile, start the timeline at the oldest entry (Abitur) rather than today
+  useEffect(() => {
+    if (window.matchMedia('(max-width: 767px)').matches) setVi(1);
+  }, []);
 
   const real = ((vi - 1) % n + n) % n;
   const progress = n > 1 ? (real / (n - 1)) * 100 : 0;
 
-  const fireWrap = (dir: 'fwd' | 'bwd') => {
-    setWrapDir(dir);
+  const fireWrap = () => {                       // loop boundary: jump bar + pop the dot
     setBarInstant(true);
+    setPopKey(k => k + 1);
     setTimeout(() => setBarInstant(false), 60);
-    setTimeout(() => setWrapDir(null), 720);
   };
-  const next = () => { if (vi === n) fireWrap('fwd'); setVi(v => v + 1); };
-  const prev = () => { if (vi === 1) fireWrap('bwd'); setVi(v => v - 1); };
+  const next = () => { if (vi === n) fireWrap(); setVi(v => v + 1); };
+  const prev = () => { if (vi === 1) fireWrap(); setVi(v => v - 1); };
   const goReal = (r: number) => setVi(r + 1);
 
   const onTrackEnd = (e: React.TransitionEvent) => {
@@ -91,10 +95,11 @@ export default function Experience() {
             );
           })}
           <div className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 ${barTrans}`} style={{ left: `${progress}%` }}>
-            <span className="block w-2.5 h-2.5 rounded-full bg-[#f0c479] shadow-[0_0_10px_3px_rgba(227,168,87,0.45)]" />
+            <span
+              key={popKey}
+              className={`block w-2.5 h-2.5 rounded-full bg-[#f0c479] shadow-[0_0_10px_3px_rgba(227,168,87,0.45)] ${popKey > 0 ? 'animate-dot-pop' : ''}`}
+            />
           </div>
-          {wrapDir === 'fwd' && <span className="exp-shoot" />}
-          {wrapDir === 'bwd' && <span className="exp-shoot-rev" />}
         </div>
 
         {/* Infinite carousel — neighbours peek on both sides (incl. wrap-around) */}
@@ -122,7 +127,7 @@ export default function Experience() {
                   onClick={() => { if (vIdx === vi + 1) next(); else if (vIdx === vi - 1) prev(); }}
                   className={`w-[var(--cw)] shrink-0 transition-opacity duration-300 ${isC ? '' : 'opacity-40 cursor-pointer'}`}
                 >
-                  <div className={`h-full bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-5 sm:p-6 ${isC ? '' : 'pointer-events-none select-none'}`}>
+                  <div className={`h-full flex flex-col justify-center bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-5 sm:p-6 ${isC ? '' : 'pointer-events-none select-none'}`}>
                     <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
                       <span
                         className={`text-[0.7rem] font-bold uppercase tracking-[1px] px-2 py-0.5 rounded-[5px] ${

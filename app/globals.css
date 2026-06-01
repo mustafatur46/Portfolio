@@ -27,74 +27,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Experience carousel: card slide-in (direction via --dir) */
-@keyframes exp-slide-in {
-  from { opacity: 0; transform: translateX(var(--dir, 24px)); }
-  to   { opacity: 1; transform: translateX(0); }
+/* Experience carousel: the position dot "pops" when the timeline loops back to the start */
+@keyframes dot-pop {
+  0%   { transform: scale(0.55); box-shadow: 0 0 0 0 rgba(227,168,87,0); }
+  45%  { transform: scale(1.95); box-shadow: 0 0 14px 5px rgba(227,168,87,0.6); }
+  100% { transform: scale(1);    box-shadow: 0 0 10px 3px rgba(227,168,87,0.45); }
 }
-.exp-card { animation: exp-slide-in 300ms cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-
-/* Experience carousel: shooting star that flies across the bar on a full loop */
-@keyframes exp-shoot {
-  0%   { left: -8%;  opacity: 0; }
-  15%  { opacity: 1; }
-  88%  { opacity: 1; }
-  100% { left: 100%; opacity: 0; }
-}
-.exp-shoot {
-  position: absolute;
-  top: 50%;
-  height: 2px;
-  width: 48px;
-  transform: translateY(-50%);
-  border-radius: 2px;
-  background: linear-gradient(to right, rgba(227,168,87,0), #f0c479);
-  animation: exp-shoot 680ms ease-in forwards;
-  pointer-events: none;
-}
-.exp-shoot::after {
-  content: '';
-  position: absolute;
-  right: -2px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #fff4dc;
-  box-shadow: 0 0 9px 2px rgba(227,168,87,0.7);
-}
-
-/* reverse: flies off the left edge (backward loop) */
-@keyframes exp-shoot-rev {
-  0%   { left: 100%; opacity: 0; }
-  15%  { opacity: 1; }
-  88%  { opacity: 1; }
-  100% { left: -8%;  opacity: 0; }
-}
-.exp-shoot-rev {
-  position: absolute;
-  top: 50%;
-  height: 2px;
-  width: 48px;
-  transform: translateY(-50%);
-  border-radius: 2px;
-  background: linear-gradient(to left, rgba(227,168,87,0), #f0c479);
-  animation: exp-shoot-rev 680ms ease-in forwards;
-  pointer-events: none;
-}
-.exp-shoot-rev::after {
-  content: '';
-  position: absolute;
-  left: -2px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #fff4dc;
-  box-shadow: 0 0 9px 2px rgba(227,168,87,0.7);
-}
+.animate-dot-pop { animation: dot-pop 430ms cubic-bezier(0.2, 0.8, 0.3, 1); }
 
 @layer utilities {
   /* Mono section heading — white, tight tracking */
