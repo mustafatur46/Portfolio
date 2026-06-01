@@ -11,7 +11,7 @@
     "greeting": "👋 Hi, ich bin",
     "role": "AI Engineer & Software Developer",
     "headline": "AI Engineer.",
-    "headlineAccent": "Ich baue Architekturen.",
+    "headlineAccent": "Von Ideen zu Systemen.",
     "intro": "Ich baue Software mit Schwerpunkt KI — von RAG-Pipelines über Reinforcement Learning bis zu Web- und Mobile-Apps. Mein Fokus: saubere Architektur und der sinnvolle Einsatz von KI im Entwicklungsprozess.",
     "intro2": "",
     "badges": ["🎓 M.Sc. KI — Goethe-Uni", "🚀 Gründer @ Beautify", "📍 Frankfurt / Aschaffenburg"],
@@ -35,28 +35,10 @@
     "education": "Ausbildung",
     "items": [
       {
-        "date": "Mai 2026 – heute",
-        "title": "Praktikant Prozessoptimierung",
-        "company": "Deutsches Institut für Interne Revision e.V.",
-        "description": "Prozessoptimierung mit IT-Mitteln: interne Abläufe analysieren, strukturieren und effizienter gestalten — Business-Analyse trifft Software-Hintergrund."
-      },
-      {
-        "date": "Sep 2025 – heute",
-        "title": "Gründer — Beautify",
-        "company": "beautify-app.de",
-        "description": "Mobile Marketplace für Beauty-Buchungen — von 0 aufgebaut. Echtzeit-Booking, integriertes Payment, lokale Anbieter-Akquise. Vom MVP bis zum Launch alleine gesteuert."
-      },
-      {
-        "date": "SS 2026 – laufend",
-        "title": "Master of Science — Informatik",
-        "company": "Goethe-Universität Frankfurt am Main",
-        "description": "Spezialisierung: Künstliche Intelligenz."
-      },
-      {
-        "date": "Apr 2022 – Aug 2025",
-        "title": "Werkstudent Softwareentwicklung",
-        "company": "Bühler Group — Alzenau",
-        "description": "3+ Jahre im Center of Process Applications: Web-Apps mit Django/SQL, KPI-Dashboards mit Power BI, automatisierte Prozesse mit Power Automate."
+        "date": "Sep 2018 – Jul 2021",
+        "title": "Abitur",
+        "company": "Hanns-Seidel-Gymnasium — Hösbach",
+        "description": ""
       },
       {
         "date": "Sep 2021 – Sep 2025",
@@ -65,10 +47,28 @@
         "description": "Schwerpunkt Data Science. Bachelorarbeit: Reinforcement Learning für adaptive Verkehrssteuerung (Python, SUMO, PPO)."
       },
       {
-        "date": "Sep 2018 – Jul 2021",
-        "title": "Abitur",
-        "company": "Hanns-Seidel-Gymnasium — Hösbach",
-        "description": ""
+        "date": "Apr 2022 – Aug 2025",
+        "title": "Werkstudent Softwareentwicklung",
+        "company": "Bühler Group — Alzenau",
+        "description": "3+ Jahre im Center of Process Applications: Web-Apps mit Django/SQL, KPI-Dashboards mit Power BI, automatisierte Prozesse mit Power Automate."
+      },
+      {
+        "date": "Sep 2025 – heute",
+        "title": "Gründer — Beautify",
+        "company": "beautify-app.de",
+        "description": "Mobile Marketplace für Beauty-Buchungen — von 0 aufgebaut. Echtzeit-Booking, integriertes Payment, lokale Anbieter-Akquise. Vom MVP bis zum Launch alleine gesteuert."
+      },
+      {
+        "date": "Apr 2026 – heute",
+        "title": "Master of Science — Informatik",
+        "company": "Goethe-Universität Frankfurt am Main",
+        "description": "Spezialisierung: Künstliche Intelligenz."
+      },
+      {
+        "date": "Mai 2026 – heute",
+        "title": "Werkstudent — Prozessoptimierung",
+        "company": "Deutsche Akademie für Präsenztraining",
+        "description": "Prozessoptimierung mit IT-Mitteln: interne Abläufe analysieren, strukturieren und effizienter gestalten — Business-Analyse trifft Software-Hintergrund."
       }
     ]
   },

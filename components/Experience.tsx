@@ -1,47 +1,57 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useI18n } from './i18n';
 
-// Structural data (language-neutral); text comes from i18n by index.
+// Structural data, CHRONOLOGICAL (oldest → newest); text comes from i18n by index.
 const META = [
-  { type: 'work' as const, tags: [] as string[] },
-  { type: 'work' as const, companyUrl: 'https://www.beautify-app.de', tags: ['React Native', 'Echtzeit-Booking', 'Payment'] },
-  { type: 'edu'  as const, tags: [] as string[] },
-  { type: 'work' as const, tags: ['Django', 'Power BI', 'Power Automate', 'SQL'] },
-  { type: 'edu'  as const, tags: [] as string[] },
-  { type: 'edu'  as const, tags: [] as string[] },
+  { type: 'edu'  as const, tags: [] as string[] },                                   // Abitur
+  { type: 'edu'  as const, tags: [] as string[] },                                   // Bachelor
+  { type: 'work' as const, tags: ['Django', 'Power BI', 'Power Automate', 'SQL'] },  // Bühler
+  { type: 'work' as const, companyUrl: 'https://www.beautify-app.de', tags: ['React Native', 'Echtzeit-Booking', 'Payment'] }, // Beautify
+  { type: 'edu'  as const, tags: [] as string[] },                                   // Master
+  { type: 'work' as const, tags: [] as string[] },                                   // DAPR Werkstudent
 ] as const;
 
 export default function Experience() {
   const { t } = useI18n();
-  const items = t.experience.items.map((txt, i) => ({ ...META[i], ...txt }));
+  const items = t.experience.items.map((txt, idx) => ({ ...META[idx], ...txt }));
   const n = items.length;
+  // virtual list with wrap clones: [last, ...items, first] → seamless infinite loop
+  const virtual = [items[n - 1], ...items, items[0]];
 
-  const [i, setI] = useState(0);
-  const [wrapping, setWrapping] = useState(false);
-  const [instant, setInstant] = useState(false);
+  const [vi, setVi] = useState(n);             // start on most recent (real n-1)
+  const [noAnim, setNoAnim] = useState(false); // disable track anim for seamless jump
+  const [wrapDir, setWrapDir] = useState<'fwd' | 'bwd' | null>(null);
+  const [barInstant, setBarInstant] = useState(false);
   const touchX = useRef(0);
 
-  const progress = n > 1 ? (i / (n - 1)) * 100 : 0;
+  const real = ((vi - 1) % n + n) % n;
+  const progress = n > 1 ? (real / (n - 1)) * 100 : 0;
 
-  const goTo = (idx: number) => setI(idx);
-  const next = () => {
-    if (i < n - 1) { setI(i + 1); return; }
-    // full loop forward → shooting star flies off, restart at 0 (instant jump)
-    setWrapping(true);
-    setInstant(true);
-    setI(0);
-    setTimeout(() => setInstant(false), 60);
-    setTimeout(() => setWrapping(false), 700);
+  const fireWrap = (dir: 'fwd' | 'bwd') => {
+    setWrapDir(dir);
+    setBarInstant(true);
+    setTimeout(() => setBarInstant(false), 60);
+    setTimeout(() => setWrapDir(null), 720);
   };
-  const prev = () => {
-    if (i > 0) { setI(i - 1); return; }
-    setI(n - 1); // backward from start → sweep to the end (0% → 100%)
-  };
+  const next = () => { if (vi === n) fireWrap('fwd'); setVi(v => v + 1); };
+  const prev = () => { if (vi === 1) fireWrap('bwd'); setVi(v => v - 1); };
+  const goReal = (r: number) => setVi(r + 1);
 
-  const trackTrans = instant ? '' : 'transition-transform duration-500 ease-[cubic-bezier(0.2,0.7,0.2,1)]';
-  const barTrans = instant ? '' : 'transition-[width,left] duration-500';
+  const onTrackEnd = (e: React.TransitionEvent) => {
+    if (e.target !== e.currentTarget || e.propertyName !== 'transform') return;
+    if (vi === n + 1) { setNoAnim(true); setVi(1); }       // past last clone → real first
+    else if (vi === 0) { setNoAnim(true); setVi(n); }      // before first clone → real last
+  };
+  useEffect(() => {
+    if (!noAnim) return;
+    const id = requestAnimationFrame(() => requestAnimationFrame(() => setNoAnim(false)));
+    return () => cancelAnimationFrame(id);
+  }, [noAnim]);
+
+  const trackTrans = noAnim ? '' : 'transition-transform duration-500 ease-[cubic-bezier(0.2,0.7,0.2,1)]';
+  const barTrans = barInstant ? '' : 'transition-[width,left] duration-500';
 
   const Arrow = ({ onClick, glyph }: { onClick: () => void; glyph: '‹' | '›' }) => (
     <button
@@ -60,7 +70,7 @@ export default function Experience() {
           {t.experience.heading}
         </h2>
 
-        {/* Shooting-star progress bar */}
+        {/* Shooting-star timeline bar (left = oldest, right = today) */}
         <div className="relative h-[3px] rounded-full bg-white/[0.07] mt-2 mb-7">
           <div
             className={`absolute left-0 top-0 h-full rounded-full ${barTrans}`}
@@ -71,27 +81,26 @@ export default function Experience() {
             return (
               <button
                 key={idx}
-                onClick={() => goTo(idx)}
+                onClick={() => goReal(idx)}
                 aria-label={`${idx + 1}`}
                 className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 flex items-center justify-center"
                 style={{ left: `${pos}%` }}
               >
-                <span
-                  className="w-[6px] h-[6px] rounded-full transition-colors"
-                  style={{ background: idx <= i ? '#e3a857' : 'rgba(255,255,255,0.22)' }}
-                />
+                <span className="w-[6px] h-[6px] rounded-full transition-colors" style={{ background: idx <= real ? '#e3a857' : 'rgba(255,255,255,0.22)' }} />
               </button>
             );
           })}
           <div className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 ${barTrans}`} style={{ left: `${progress}%` }}>
             <span className="block w-2.5 h-2.5 rounded-full bg-[#f0c479] shadow-[0_0_10px_3px_rgba(227,168,87,0.45)]" />
           </div>
-          {wrapping && <span className="exp-shoot" />}
+          {wrapDir === 'fwd' && <span className="exp-shoot" />}
+          {wrapDir === 'bwd' && <span className="exp-shoot-rev" />}
         </div>
 
-        {/* Carousel: current card centered, neighbours peeking on both sides */}
+        {/* Infinite carousel — neighbours peek on both sides (incl. wrap-around) */}
         <div
           className="overflow-hidden"
+          style={{ ['--cw' as string]: 'clamp(210px, 62vw, 760px)' }}
           onTouchStart={e => { touchX.current = e.touches[0].clientX; }}
           onTouchEnd={e => {
             const dx = e.changedTouches[0].clientX - touchX.current;
@@ -100,19 +109,20 @@ export default function Experience() {
           }}
         >
           <div
-            className={`flex gap-4 ${trackTrans}`}
-            style={{ transform: `translateX(calc(${-i} * (86% + 1rem) + 7%))` }}
+            className={`flex gap-4 items-stretch ${trackTrans}`}
+            style={{ transform: `translateX(calc((100% - var(--cw)) / 2 - ${vi} * (var(--cw) + 1rem)))` }}
+            onTransitionEnd={onTrackEnd}
           >
-            {items.map((it, idx) => {
+            {virtual.map((it, vIdx) => {
+              const isC = vIdx === vi;
               const cu = 'companyUrl' in it ? it.companyUrl : undefined;
-              const isActive = idx === i;
               return (
                 <div
-                  key={idx}
-                  onClick={() => { if (!isActive) goTo(idx); }}
-                  className={`w-[86%] shrink-0 transition-opacity duration-300 ${isActive ? '' : 'opacity-40 cursor-pointer'}`}
+                  key={vIdx}
+                  onClick={() => { if (vIdx === vi + 1) next(); else if (vIdx === vi - 1) prev(); }}
+                  className={`w-[var(--cw)] shrink-0 transition-opacity duration-300 ${isC ? '' : 'opacity-40 cursor-pointer'}`}
                 >
-                  <div className={`bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-5 sm:p-6 min-h-[200px] ${isActive ? '' : 'pointer-events-none select-none'}`}>
+                  <div className={`h-full bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-5 sm:p-6 ${isC ? '' : 'pointer-events-none select-none'}`}>
                     <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
                       <span
                         className={`text-[0.7rem] font-bold uppercase tracking-[1px] px-2 py-0.5 rounded-[5px] ${
@@ -159,7 +169,7 @@ export default function Experience() {
         <div className="flex items-center justify-center gap-5 mt-5">
           <Arrow onClick={prev} glyph="‹" />
           <span className="text-[0.8rem] font-mono text-[#666] tabular-nums">
-            {String(i + 1).padStart(2, '0')} / {String(n).padStart(2, '0')}
+            {String(real + 1).padStart(2, '0')} / {String(n).padStart(2, '0')}
           </span>
           <Arrow onClick={next} glyph="›" />
         </div>

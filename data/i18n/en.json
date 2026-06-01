@@ -11,7 +11,7 @@
     "greeting": "👋 Hi, I'm",
     "role": "AI Engineer & Software Developer",
     "headline": "AI Engineer.",
-    "headlineAccent": "I build architectures.",
+    "headlineAccent": "From ideas to systems.",
     "intro": "I build software with a focus on AI — from RAG pipelines and reinforcement learning to web and mobile apps. My focus: clean architecture and the meaningful use of AI in the development process.",
     "intro2": "",
     "badges": ["🎓 M.Sc. AI — Goethe University", "🚀 Founder @ Beautify", "📍 Frankfurt / Aschaffenburg"],
@@ -35,28 +35,10 @@
     "education": "Education",
     "items": [
       {
-        "date": "May 2026 – present",
-        "title": "Intern, Process Optimization",
-        "company": "Deutsches Institut für Interne Revision e.V.",
-        "description": "Process optimization with IT means: analyzing, structuring and streamlining internal workflows — business analysis meets a software background."
-      },
-      {
-        "date": "Sep 2025 – present",
-        "title": "Founder — Beautify",
-        "company": "beautify-app.de",
-        "description": "Mobile marketplace for beauty bookings — built from zero. Real-time booking, integrated payments, local provider acquisition. Solo-driven from MVP to launch."
-      },
-      {
-        "date": "Summer 2026 – ongoing",
-        "title": "Master of Science — Computer Science",
-        "company": "Goethe University Frankfurt am Main",
-        "description": "Specialization: Artificial Intelligence."
-      },
-      {
-        "date": "Apr 2022 – Aug 2025",
-        "title": "Working Student, Software Development",
-        "company": "Bühler Group — Alzenau",
-        "description": "3+ years in the Center of Process Applications: web apps with Django/SQL, KPI dashboards with Power BI, automated processes with Power Automate."
+        "date": "Sep 2018 – Jul 2021",
+        "title": "Abitur (High School Diploma)",
+        "company": "Hanns-Seidel-Gymnasium — Hösbach",
+        "description": ""
       },
       {
         "date": "Sep 2021 – Sep 2025",
@@ -65,10 +47,28 @@
         "description": "Focus on Data Science. Thesis: reinforcement learning for adaptive traffic control (Python, SUMO, PPO)."
       },
       {
-        "date": "Sep 2018 – Jul 2021",
-        "title": "Abitur (High School Diploma)",
-        "company": "Hanns-Seidel-Gymnasium — Hösbach",
-        "description": ""
+        "date": "Apr 2022 – Aug 2025",
+        "title": "Working Student, Software Development",
+        "company": "Bühler Group — Alzenau",
+        "description": "3+ years in the Center of Process Applications: web apps with Django/SQL, KPI dashboards with Power BI, automated processes with Power Automate."
+      },
+      {
+        "date": "Sep 2025 – present",
+        "title": "Founder — Beautify",
+        "company": "beautify-app.de",
+        "description": "Mobile marketplace for beauty bookings — built from zero. Real-time booking, integrated payments, local provider acquisition. Solo-driven from MVP to launch."
+      },
+      {
+        "date": "Apr 2026 – present",
+        "title": "Master of Science — Computer Science",
+        "company": "Goethe University Frankfurt am Main",
+        "description": "Specialization: Artificial Intelligence."
+      },
+      {
+        "date": "May 2026 – present",
+        "title": "Working Student, Process Optimization",
+        "company": "Deutsche Akademie für Präsenztraining",
+        "description": "Process optimization with IT means: analyzing, structuring and streamlining internal workflows — business analysis meets a software background."
       }
     ]
   },
