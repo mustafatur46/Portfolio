@@ -82,6 +82,8 @@
     "techStack": "Tech Stack",
     "links": "Links",
     "fullscreen": "Fullscreen",
+    "showMore": "Show more",
+    "showLess": "Show less",
     "noDiagramTitle": "Architecture diagram coming soon",
     "noDiagramBody": "No detailed diagram is on file for this project (yet) — see the overview below."
   },

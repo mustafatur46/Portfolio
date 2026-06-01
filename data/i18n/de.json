@@ -82,6 +82,8 @@
     "techStack": "Tech Stack",
     "links": "Links",
     "fullscreen": "Vollbild",
+    "showMore": "Mehr anzeigen",
+    "showLess": "Weniger anzeigen",
     "noDiagramTitle": "Architektur-Diagramm folgt",
     "noDiagramBody": "Für dieses Projekt ist (noch) kein detailliertes Diagramm hinterlegt — siehe Overview unten."
   },

@@ -14,6 +14,9 @@ export default function ProjectsFlow() {
 
   const [selectedId, setSelectedId] = useState<string>(PROJECTS[0].id);
   const [fullscreen, setFullscreen] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+
+  const select = (id: string) => { setSelectedId(id); setExpanded(false); };
 
   const p     = PROJECTS.find(pr => pr.id === selectedId) ?? PROJECTS[0];
   const cat   = CATEGORIES.find(c => c.id === p.category);
@@ -45,7 +48,7 @@ export default function ProjectsFlow() {
               return (
                 <button
                   key={pr.id}
-                  onClick={() => setSelectedId(pr.id)}
+                  onClick={() => select(pr.id)}
                   className="group flex items-center gap-2.5 text-left px-3 py-2.5 rounded-[11px] border transition-all flex-shrink-0 md:flex-shrink md:w-full"
                   style={
                     active
@@ -133,11 +136,19 @@ export default function ProjectsFlow() {
           <div className="px-4 sm:px-5 py-5 flex flex-col gap-5 border-t border-white/[0.06]">
             <div>
               <p className="text-[0.66rem] font-bold uppercase tracking-[1.5px] text-[#444] mb-2">{ps.overview}</p>
-              <p className="text-[0.86rem] text-[#aaa] leading-[1.78]">{txt.full}</p>
+              <p className={`text-[0.86rem] text-[#aaa] leading-[1.78] ${expanded ? '' : 'line-clamp-3'}`}>{txt.full}</p>
+              <button
+                onClick={() => setExpanded(v => !v)}
+                className="mt-2 text-[0.74rem] font-semibold inline-flex items-center gap-1 hover:opacity-80 transition-opacity"
+                style={{ color }}
+              >
+                {expanded ? ps.showLess : ps.showMore}
+                <span className="text-[0.7em]">{expanded ? '▴' : '▾'}</span>
+              </button>
             </div>
 
-            {txt.notes && txt.notes.length > 0 && (
-              <div>
+            {expanded && txt.notes && txt.notes.length > 0 && (
+              <div className="animate-fade-up">
                 <p className="text-[0.66rem] font-bold uppercase tracking-[1.5px] text-[#444] mb-2.5">{ps.keyDecisions}</p>
                 <ul className="flex flex-col gap-1.5">
                   {txt.notes.map((note, i) => (
