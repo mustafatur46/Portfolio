@@ -19,18 +19,16 @@ export default function Experience() {
   const n = items.length;
 
   const [i, setI] = useState(0);
-  const [dir, setDir] = useState(1);
   const [wrapping, setWrapping] = useState(false);
   const [instant, setInstant] = useState(false);
   const touchX = useRef(0);
 
   const progress = n > 1 ? (i / (n - 1)) * 100 : 0;
 
-  const goTo = (idx: number) => { setDir(idx >= i ? 1 : -1); setI(idx); };
+  const goTo = (idx: number) => setI(idx);
   const next = () => {
-    if (i < n - 1) { setDir(1); setI(i + 1); return; }
-    // full loop forward → shooting star flies off, restart at 0
-    setDir(1);
+    if (i < n - 1) { setI(i + 1); return; }
+    // full loop forward → shooting star flies off, restart at 0 (instant jump)
     setWrapping(true);
     setInstant(true);
     setI(0);
@@ -38,23 +36,20 @@ export default function Experience() {
     setTimeout(() => setWrapping(false), 700);
   };
   const prev = () => {
-    if (i > 0) { setDir(-1); setI(i - 1); return; }
-    // backward from start → sweep to the end (0% → 100%)
-    setDir(-1);
-    setI(n - 1);
+    if (i > 0) { setI(i - 1); return; }
+    setI(n - 1); // backward from start → sweep to the end (0% → 100%)
   };
 
-  const item = items[i];
-  const companyUrl = 'companyUrl' in item ? item.companyUrl : undefined;
-  const trans = instant ? '' : 'transition-[width,left] duration-500';
+  const trackTrans = instant ? '' : 'transition-transform duration-500 ease-[cubic-bezier(0.2,0.7,0.2,1)]';
+  const barTrans = instant ? '' : 'transition-[width,left] duration-500';
 
-  const Arrow = ({ onClick, dirIcon }: { onClick: () => void; dirIcon: '‹' | '›' }) => (
+  const Arrow = ({ onClick, glyph }: { onClick: () => void; glyph: '‹' | '›' }) => (
     <button
       onClick={onClick}
-      aria-label={dirIcon === '‹' ? 'Previous' : 'Next'}
+      aria-label={glyph === '‹' ? 'Previous' : 'Next'}
       className="w-9 h-9 flex items-center justify-center rounded-full border border-white/[0.12] bg-white/[0.04] text-[#bbb] text-[1.3rem] leading-none hover:text-white hover:border-white/30 transition-colors"
     >
-      {dirIcon}
+      {glyph}
     </button>
   );
 
@@ -68,7 +63,7 @@ export default function Experience() {
         {/* Shooting-star progress bar */}
         <div className="relative h-[3px] rounded-full bg-white/[0.07] mt-2 mb-7">
           <div
-            className={`absolute left-0 top-0 h-full rounded-full ${trans}`}
+            className={`absolute left-0 top-0 h-full rounded-full ${barTrans}`}
             style={{ width: `${progress}%`, background: 'linear-gradient(to right, rgba(227,168,87,0.12), #e3a857)' }}
           />
           {items.map((_, idx) => {
@@ -88,14 +83,13 @@ export default function Experience() {
               </button>
             );
           })}
-          {/* current head star */}
-          <div className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 ${trans}`} style={{ left: `${progress}%` }}>
+          <div className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 ${barTrans}`} style={{ left: `${progress}%` }}>
             <span className="block w-2.5 h-2.5 rounded-full bg-[#f0c479] shadow-[0_0_10px_3px_rgba(227,168,87,0.45)]" />
           </div>
           {wrapping && <span className="exp-shoot" />}
         </div>
 
-        {/* Card (one at a time) */}
+        {/* Carousel: current card centered, neighbours peeking on both sides */}
         <div
           className="overflow-hidden"
           onTouchStart={e => { touchX.current = e.touches[0].clientX; }}
@@ -106,55 +100,68 @@ export default function Experience() {
           }}
         >
           <div
-            key={i}
-            className="exp-card bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-5 sm:p-6 min-h-[200px]"
-            style={{ ['--dir' as string]: dir === 1 ? '30px' : '-30px' }}
+            className={`flex gap-4 ${trackTrans}`}
+            style={{ transform: `translateX(calc(${-i} * (86% + 1rem) + 7%))` }}
           >
-            <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
-              <span
-                className={`text-[0.7rem] font-bold uppercase tracking-[1px] px-2 py-0.5 rounded-[5px] ${
-                  item.type === 'work' ? 'bg-[#e3a857]/15 text-[#efc78a]' : 'bg-[#5fa3a0]/15 text-[#86c2bf]'
-                }`}
-              >
-                {item.type === 'work' ? t.experience.work : t.experience.education}
-              </span>
-              <span className="text-[0.78rem] text-[#555]">{item.date}</span>
-            </div>
+            {items.map((it, idx) => {
+              const cu = 'companyUrl' in it ? it.companyUrl : undefined;
+              const isActive = idx === i;
+              return (
+                <div
+                  key={idx}
+                  onClick={() => { if (!isActive) goTo(idx); }}
+                  className={`w-[86%] shrink-0 transition-opacity duration-300 ${isActive ? '' : 'opacity-40 cursor-pointer'}`}
+                >
+                  <div className={`bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-5 sm:p-6 min-h-[200px] ${isActive ? '' : 'pointer-events-none select-none'}`}>
+                    <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
+                      <span
+                        className={`text-[0.7rem] font-bold uppercase tracking-[1px] px-2 py-0.5 rounded-[5px] ${
+                          it.type === 'work' ? 'bg-[#e3a857]/15 text-[#efc78a]' : 'bg-[#5fa3a0]/15 text-[#86c2bf]'
+                        }`}
+                      >
+                        {it.type === 'work' ? t.experience.work : t.experience.education}
+                      </span>
+                      <span className="text-[0.78rem] text-[#555]">{it.date}</span>
+                    </div>
 
-            <h3 className="text-[1.05rem] sm:text-[1.15rem] font-semibold text-white mb-0.5">{item.title}</h3>
+                    <h3 className="text-[1.05rem] sm:text-[1.15rem] font-semibold text-white mb-0.5">{it.title}</h3>
 
-            {companyUrl ? (
-              <a href={companyUrl} target="_blank" rel="noopener noreferrer"
-                 className="text-[0.85rem] text-[#e3a857] mb-2 block hover:underline">
-                {item.company} ↗
-              </a>
-            ) : (
-              <p className="text-[0.85rem] text-[#e3a857] mb-2">{item.company}</p>
-            )}
+                    {cu ? (
+                      <a href={cu} target="_blank" rel="noopener noreferrer"
+                         className="text-[0.85rem] text-[#e3a857] mb-2 block hover:underline">
+                        {it.company} ↗
+                      </a>
+                    ) : (
+                      <p className="text-[0.85rem] text-[#e3a857] mb-2">{it.company}</p>
+                    )}
 
-            {item.description && (
-              <p className="text-[0.88rem] text-[#888] leading-relaxed">{item.description}</p>
-            )}
+                    {it.description && (
+                      <p className="text-[0.88rem] text-[#888] leading-relaxed">{it.description}</p>
+                    )}
 
-            {item.tags.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 mt-3">
-                {item.tags.map(tag => (
-                  <span key={tag} className="text-[0.75rem] px-2 py-0.5 rounded-[5px] bg-white/[0.06] border border-white/[0.09] text-[#888]">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
+                    {it.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mt-3">
+                        {it.tags.map(tag => (
+                          <span key={tag} className="text-[0.75rem] px-2 py-0.5 rounded-[5px] bg-white/[0.06] border border-white/[0.09] text-[#888]">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
         {/* Controls */}
         <div className="flex items-center justify-center gap-5 mt-5">
-          <Arrow onClick={prev} dirIcon="‹" />
+          <Arrow onClick={prev} glyph="‹" />
           <span className="text-[0.8rem] font-mono text-[#666] tabular-nums">
             {String(i + 1).padStart(2, '0')} / {String(n).padStart(2, '0')}
           </span>
-          <Arrow onClick={next} dirIcon="›" />
+          <Arrow onClick={next} glyph="›" />
         </div>
       </div>
     </section>

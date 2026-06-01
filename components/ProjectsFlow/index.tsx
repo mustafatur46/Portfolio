@@ -136,30 +136,40 @@ export default function ProjectsFlow() {
           <div className="px-4 sm:px-5 py-5 flex flex-col gap-5 border-t border-white/[0.06]">
             <div>
               <p className="text-[0.66rem] font-bold uppercase tracking-[1.5px] text-[#444] mb-2">{ps.overview}</p>
-              <p className={`text-[0.86rem] text-[#aaa] leading-[1.78] ${expanded ? '' : 'line-clamp-3'}`}>{txt.full}</p>
+              <p className="text-[0.86rem] text-[#aaa] leading-[1.78]">{txt.short}</p>
+
+              {/* Smooth collapsible: full overview + key decisions */}
+              <div
+                className="grid transition-[grid-template-rows] duration-[450ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+                style={{ gridTemplateRows: expanded ? '1fr' : '0fr' }}
+              >
+                <div className="overflow-hidden">
+                  <p className="text-[0.86rem] text-[#aaa] leading-[1.78] pt-3">{txt.full}</p>
+                  {txt.notes && txt.notes.length > 0 && (
+                    <div className="mt-4">
+                      <p className="text-[0.66rem] font-bold uppercase tracking-[1.5px] text-[#444] mb-2.5">{ps.keyDecisions}</p>
+                      <ul className="flex flex-col gap-1.5">
+                        {txt.notes.map((note, idx) => (
+                          <li key={idx} className="text-[0.8rem] text-[#999] leading-[1.6] pl-3.5 relative">
+                            <span className="absolute left-0 top-[0.55em] w-[5px] h-[5px] rounded-full" style={{ background: color }} />
+                            {note}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+
               <button
                 onClick={() => setExpanded(v => !v)}
-                className="mt-2 text-[0.74rem] font-semibold inline-flex items-center gap-1 hover:opacity-80 transition-opacity"
+                className="mt-3 text-[0.74rem] font-semibold inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
                 style={{ color }}
               >
                 {expanded ? ps.showLess : ps.showMore}
-                <span className="text-[0.7em]">{expanded ? '▴' : '▾'}</span>
+                <span className="text-[0.7em] transition-transform duration-[450ms]" style={{ transform: expanded ? 'rotate(180deg)' : 'none' }}>▾</span>
               </button>
             </div>
-
-            {expanded && txt.notes && txt.notes.length > 0 && (
-              <div className="animate-fade-up">
-                <p className="text-[0.66rem] font-bold uppercase tracking-[1.5px] text-[#444] mb-2.5">{ps.keyDecisions}</p>
-                <ul className="flex flex-col gap-1.5">
-                  {txt.notes.map((note, i) => (
-                    <li key={i} className="text-[0.8rem] text-[#999] leading-[1.6] pl-3.5 relative">
-                      <span className="absolute left-0 top-[0.55em] w-[5px] h-[5px] rounded-full" style={{ background: color }} />
-                      {note}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
 
             <div>
               <p className="text-[0.66rem] font-bold uppercase tracking-[1.5px] text-[#444] mb-2.5">{ps.techStack}</p>
