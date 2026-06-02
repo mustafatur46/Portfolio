@@ -67,7 +67,7 @@ export const PROJECTS: Project[] = [
         { id: 'reward',   label: 'RewardCalculator', sublabel: 'wait+queue+fair', kind: 'process', x: 720, y: 150 },
         { id: 'tl',       label: 'TrafficLightManager', sublabel: 'phase FSM', kind: 'process', x: 470, y: 500 },
         { id: 'curr',     label: 'CurriculumManager', sublabel: '4 levels · HDF5', kind: 'data', x: 720, y: 500 },
-        { id: 'weather',  label: 'WeatherManager', sublabel: 'Open-Meteo → μ', kind: 'service', x: 900, y: 420 },
+        { id: 'weather',  label: 'WeatherManager', sublabel: 'Open-Meteo → μ', kind: 'service', x: 900, y: 400 },
       ],
       edges: [
         { from: 'training', to: 'vecenv', label: 'spawn' },
