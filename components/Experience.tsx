@@ -177,13 +177,19 @@ export default function Experience() {
                     transform: `translateX(calc(-50% + ${off} * (var(--cw) + 1rem)))`,
                     opacity: isC ? 1 : Math.abs(off) === 1 ? 0.42 : 0,
                     zIndex: isC ? 2 : 1,
+                    // Far cards are fully invisible — skip their paint entirely; only
+                    // promote the three on-screen cards to compositor layers.
+                    visibility: Math.abs(off) <= 1 ? 'visible' : 'hidden',
+                    willChange: Math.abs(off) <= 1 ? 'transform, opacity' : 'auto',
                     pointerEvents: Math.abs(off) <= 1 ? 'auto' : 'none',
                   }}
                 >
                   <div
                     ref={el => { cardRefs.current[idx] = el; }}
                     style={{ minHeight: cardH || undefined }}
-                    className={`flex flex-col justify-center bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-5 ${isC ? '' : 'pointer-events-none select-none'} ${pulse && isC ? 'animate-card-pop' : ''}`}
+                    // backdrop-blur only on the center card: blurring a moving element is
+                    // the main GPU cost, and on the dimmed side cards it's imperceptible.
+                    className={`flex flex-col justify-center bg-white/[0.04] border border-white/[0.09] rounded-[14px] p-5 ${isC ? 'backdrop-blur-xl' : ''} ${isC ? '' : 'pointer-events-none select-none'} ${pulse && isC ? 'animate-card-pop' : ''}`}
                   >
                     <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
                       <span
