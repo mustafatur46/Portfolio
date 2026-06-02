@@ -18,39 +18,37 @@ export default function Experience() {
   const items = t.experience.items.map((txt, idx) => ({ ...META[idx], ...txt }));
   const n = items.length;
 
-  // ── Mobile carousel state (infinite loop, starts at the oldest entry) ──────────
-  const virtual = [items[n - 1], ...items, items[0]];
-  const [vi, setVi] = useState(1);
-  const [noAnim, setNoAnim] = useState(false);
+  // ── Mobile carousel state (stateless circular index → robust under rapid input) ─
+  const [i, setI] = useState(0);                 // starts at the oldest entry (Abitur)
   const [popKey, setPopKey] = useState(0);
   const [barInstant, setBarInstant] = useState(false);
+  const [cardH, setCardH] = useState(0);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const touchX = useRef(0);
 
-  const real = ((vi - 1) % n + n) % n;
-  const progress = n > 1 ? (real / (n - 1)) * 100 : 0;
-
-  const fireWrap = () => {
-    setBarInstant(true);
-    setPopKey(k => k + 1);
-    setTimeout(() => setBarInstant(false), 60);
-  };
-  const next = () => { if (vi === n) fireWrap(); setVi(v => v + 1); };
-  const prev = () => { if (vi === 1) fireWrap(); setVi(v => v - 1); };
-  const goReal = (r: number) => setVi(r + 1);
-
-  const onTrackEnd = (e: React.TransitionEvent) => {
-    if (e.target !== e.currentTarget || e.propertyName !== 'transform') return;
-    if (vi === n + 1) { setNoAnim(true); setVi(1); }
-    else if (vi === 0) { setNoAnim(true); setVi(n); }
-  };
-  useEffect(() => {
-    if (!noAnim) return;
-    const id = requestAnimationFrame(() => requestAnimationFrame(() => setNoAnim(false)));
-    return () => cancelAnimationFrame(id);
-  }, [noAnim]);
-
-  const trackTrans = noAnim ? '' : 'transition-transform duration-500 ease-[cubic-bezier(0.2,0.7,0.2,1)]';
+  const progress = n > 1 ? (i / (n - 1)) * 100 : 0;
   const barTrans = barInstant ? '' : 'transition-[width,left] duration-500';
+
+  // shortest circular offset of a card from the current index
+  const offset = (idx: number) => {
+    let o = idx - i;
+    if (o > n / 2) o -= n;
+    else if (o < -n / 2) o += n;
+    return o;
+  };
+
+  const popDot = () => { setBarInstant(true); setPopKey(k => k + 1); setTimeout(() => setBarInstant(false), 60); };
+  const next = () => setI(p => { const ni = (p + 1) % n; if (ni === 0) popDot(); return ni; });          // loop → bar jumps + pop
+  const prev = () => setI(p => { if (p === 0) popDot(); return (p - 1 + n) % n; });
+  const goTo = (idx: number) => setI(idx);
+
+  // Measure the tallest card once per language so the slot never clips
+  useEffect(() => { setCardH(0); }, [t]);
+  useEffect(() => {
+    if (cardH !== 0) return;
+    const max = Math.max(0, ...cardRefs.current.map(el => el?.offsetHeight ?? 0));
+    if (max) setCardH(max);
+  }, [cardH, t]);
 
   const Arrow = ({ onClick, glyph }: { onClick: () => void; glyph: '‹' | '›' }) => (
     <button
@@ -119,7 +117,7 @@ export default function Experience() {
           </div>
         </div>
 
-        {/* ── MOBILE: infinite carousel with shooting-star timeline bar ────────── */}
+        {/* ── MOBILE: circular carousel with shooting-star timeline bar ────────── */}
         <div className="md:hidden">
           <div className="relative h-[3px] rounded-full bg-white/[0.07] mt-2 mb-7">
             <div
@@ -131,12 +129,12 @@ export default function Experience() {
               return (
                 <button
                   key={idx}
-                  onClick={() => goReal(idx)}
+                  onClick={() => goTo(idx)}
                   aria-label={`${idx + 1}`}
                   className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 flex items-center justify-center"
                   style={{ left: `${pos}%` }}
                 >
-                  <span className="w-[6px] h-[6px] rounded-full transition-colors" style={{ background: idx <= real ? '#e3a857' : 'rgba(255,255,255,0.22)' }} />
+                  <span className="w-[6px] h-[6px] rounded-full transition-colors" style={{ background: idx <= i ? '#e3a857' : 'rgba(255,255,255,0.22)' }} />
                 </button>
               );
             })}
@@ -149,8 +147,8 @@ export default function Experience() {
           </div>
 
           <div
-            className="overflow-hidden"
-            style={{ ['--cw' as string]: 'clamp(210px, 62vw, 760px)' }}
+            className="relative overflow-hidden"
+            style={{ height: cardH || undefined, ['--cw' as string]: 'clamp(210px, 62vw, 760px)' }}
             onTouchStart={e => { touchX.current = e.touches[0].clientX; }}
             onTouchEnd={e => {
               const dx = e.changedTouches[0].clientX - touchX.current;
@@ -158,62 +156,68 @@ export default function Experience() {
               else if (dx > 40) prev();
             }}
           >
-            <div
-              className={`flex gap-4 items-stretch ${trackTrans}`}
-              style={{ transform: `translateX(calc((100% - var(--cw)) / 2 - ${vi} * (var(--cw) + 1rem)))` }}
-              onTransitionEnd={onTrackEnd}
-            >
-              {virtual.map((it, vIdx) => {
-                const isC = vIdx === vi;
-                const cu = 'companyUrl' in it ? it.companyUrl : undefined;
-                return (
+            {items.map((it, idx) => {
+              const off = offset(idx);
+              const isC = idx === i;
+              const cu = 'companyUrl' in it ? it.companyUrl : undefined;
+              return (
+                <div
+                  key={idx}
+                  onClick={() => { if (off === 1) next(); else if (off === -1) prev(); }}
+                  className={`absolute top-0 left-1/2 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.2,0.7,0.2,1)] ${isC ? '' : 'cursor-pointer'}`}
+                  style={{
+                    width: 'var(--cw)',
+                    transform: `translateX(calc(-50% + ${off} * (var(--cw) + 1rem)))`,
+                    opacity: isC ? 1 : Math.abs(off) === 1 ? 0.42 : 0,
+                    zIndex: isC ? 2 : 1,
+                    pointerEvents: Math.abs(off) <= 1 ? 'auto' : 'none',
+                  }}
+                >
                   <div
-                    key={vIdx}
-                    onClick={() => { if (vIdx === vi + 1) next(); else if (vIdx === vi - 1) prev(); }}
-                    className={`w-[var(--cw)] shrink-0 transition-opacity duration-300 ${isC ? '' : 'opacity-40 cursor-pointer'}`}
+                    ref={el => { cardRefs.current[idx] = el; }}
+                    style={{ minHeight: cardH || undefined }}
+                    className={`flex flex-col justify-center bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-5 ${isC ? '' : 'pointer-events-none select-none'}`}
                   >
-                    <div className={`h-full flex flex-col justify-center bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-5 ${isC ? '' : 'pointer-events-none select-none'}`}>
-                      <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
-                        <span
-                          className={`text-[0.7rem] font-bold uppercase tracking-[1px] px-2 py-0.5 rounded-[5px] ${
-                            it.type === 'work' ? 'bg-[#e3a857]/15 text-[#efc78a]' : 'bg-[#5fa3a0]/15 text-[#86c2bf]'
-                          }`}
-                        >
-                          {it.type === 'work' ? t.experience.work : t.experience.education}
-                        </span>
-                        <span className="text-[0.78rem] text-[#555]">{it.date}</span>
-                      </div>
-                      <h3 className="text-[1.05rem] font-semibold text-white mb-0.5">{it.title}</h3>
-                      {cu ? (
-                        <a href={cu} target="_blank" rel="noopener noreferrer" className="text-[0.85rem] text-[#e3a857] mb-2 block hover:underline">
-                          {it.company} ↗
-                        </a>
-                      ) : (
-                        <p className="text-[0.85rem] text-[#e3a857] mb-2">{it.company}</p>
-                      )}
-                      {it.description && (
-                        <p className="text-[0.88rem] text-[#888] leading-relaxed">{it.description}</p>
-                      )}
-                      {it.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5 mt-3">
-                          {it.tags.map(tag => (
-                            <span key={tag} className="text-[0.75rem] px-2 py-0.5 rounded-[5px] bg-white/[0.06] border border-white/[0.09] text-[#888]">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      )}
+                    <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
+                      <span
+                        className={`text-[0.7rem] font-bold uppercase tracking-[1px] px-2 py-0.5 rounded-[5px] ${
+                          it.type === 'work' ? 'bg-[#e3a857]/15 text-[#efc78a]' : 'bg-[#5fa3a0]/15 text-[#86c2bf]'
+                        }`}
+                      >
+                        {it.type === 'work' ? t.experience.work : t.experience.education}
+                      </span>
+                      <span className="text-[0.78rem] text-[#555]">{it.date}</span>
                     </div>
+                    <h3 className="text-[1.05rem] font-semibold text-white mb-0.5">{it.title}</h3>
+                    {cu ? (
+                      <a href={cu} target="_blank" rel="noopener noreferrer" className="text-[0.85rem] text-[#e3a857] mb-2 block hover:underline">
+                        {it.company} ↗
+                      </a>
+                    ) : (
+                      <p className="text-[0.85rem] text-[#e3a857] mb-2">{it.company}</p>
+                    )}
+                    {it.description && (
+                      <p className="text-[0.88rem] text-[#888] leading-relaxed">{it.description}</p>
+                    )}
+                    {it.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mt-3">
+                        {it.tags.map(tag => (
+                          <span key={tag} className="text-[0.75rem] px-2 py-0.5 rounded-[5px] bg-white/[0.06] border border-white/[0.09] text-[#888]">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              );
+            })}
           </div>
 
           <div className="flex items-center justify-center gap-5 mt-5">
             <Arrow onClick={prev} glyph="‹" />
             <span className="text-[0.8rem] font-mono text-[#666] tabular-nums">
-              {String(real + 1).padStart(2, '0')} / {String(n).padStart(2, '0')}
+              {String(i + 1).padStart(2, '0')} / {String(n).padStart(2, '0')}
             </span>
             <Arrow onClick={next} glyph="›" />
           </div>
