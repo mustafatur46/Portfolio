@@ -15,25 +15,44 @@ const KIND: Record<ArchKind, { color: string; tag: string }> = {
   sim:     { color: '#c2a878', tag: 'Simulator' },
 };
 
+export type ArchSide = 'top' | 'bottom' | 'left' | 'right';
+
+/** A single attachment point the canvas asked us to render, at a fraction
+ *  (0..1) along its side so multiple edges on one side never overlap. */
+export interface ArchHandle {
+  id: string;
+  side: ArchSide;
+  type: 'source' | 'target';
+  offset: number;
+}
+
 export interface ArchNodeData {
   label: string;
   sublabel?: string;
   kind?: ArchKind;
+  handles?: ArchHandle[];
   [key: string]: unknown;
 }
 
-// Invisible handles on all four sides; the overlay picks which pair an edge uses.
+const POS: Record<ArchSide, Position> = {
+  top:    Position.Top,
+  bottom: Position.Bottom,
+  left:   Position.Left,
+  right:  Position.Right,
+};
+
 const HANDLE_STYLE = { opacity: 0, width: 1, height: 1, border: 'none', minWidth: 0, minHeight: 0 } as const;
 
-const SIDES: Array<[Position, string]> = [
-  [Position.Top, 'top'],
-  [Position.Bottom, 'bottom'],
-  [Position.Left, 'left'],
-  [Position.Right, 'right'],
-];
+// Position the (invisible) handle along its side. Left/right slide vertically,
+// top/bottom slide horizontally; 0.5 keeps the classic centered attachment.
+function offsetStyle(side: ArchSide, offset: number) {
+  const pct = `${offset * 100}%`;
+  return side === 'left' || side === 'right' ? { top: pct } : { left: pct };
+}
 
 export default function ArchNode({ data }: { data: ArchNodeData }) {
   const k = KIND[data.kind ?? 'process'];
+  const handles = data.handles ?? [];
 
   return (
     <div
@@ -46,11 +65,14 @@ export default function ArchNode({ data }: { data: ArchNodeData }) {
         boxShadow:    `0 0 22px ${k.color}1a, inset 0 1px 0 ${k.color}22`,
       }}
     >
-      {SIDES.map(([pos, id]) => (
-        <span key={id}>
-          <Handle id={`${id}-s`} type="source" position={pos} style={HANDLE_STYLE} />
-          <Handle id={`${id}-t`} type="target" position={pos} style={HANDLE_STYLE} />
-        </span>
+      {handles.map(h => (
+        <Handle
+          key={h.id}
+          id={h.id}
+          type={h.type}
+          position={POS[h.side]}
+          style={{ ...HANDLE_STYLE, ...offsetStyle(h.side, h.offset) }}
+        />
       ))}
 
       <span
