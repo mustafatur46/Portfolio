@@ -26,10 +26,10 @@ export const PROJECTS: Project[] = [
         { id: 'embed',   label: 'Gemini Embedding', sublabel: 'embedding-001 · vector', kind: 'service', x: 620, y: 30  },
         { id: 'numpy',   label: 'NumPy cosine', sublabel: 'similarity · top-3', kind: 'process', x: 620, y: 160 },
         { id: 'flash',   label: 'Gemini 2.5 Flash', sublabel: 'context + query → answer', kind: 'service', x: 620, y: 290 },
-        // ── Offline index build: source of truth → vector store ────────────────
-        { id: 'json',    label: 'embeddings.json', sublabel: 'normalized matrix', kind: 'data', x: 300, y: 400 },
-        { id: 'build',   label: 'build_index.py', sublabel: 'chunk + embed', kind: 'process', x: 300, y: 530 },
-        { id: 'md',      label: 'profile.md', sublabel: 'source of truth', kind: 'data', x: 40, y: 530 },
+        // ── Offline index build (own right-hand lane): source of truth → store ──
+        { id: 'json',    label: 'embeddings.json', sublabel: 'normalized matrix', kind: 'data', x: 960, y: 160 },
+        { id: 'build',   label: 'build_index.py', sublabel: 'chunk + embed', kind: 'process', x: 960, y: 310 },
+        { id: 'md',      label: 'profile.md', sublabel: 'source of truth', kind: 'data', x: 960, y: 460 },
       ],
       edges: [
         // Runtime: browser asks, server orchestrates the RAG steps in order, answer returns
