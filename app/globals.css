@@ -12,19 +12,30 @@ html {
 
 body {
   background: #000000;
-  /* soft top spotlight + faint warm ambient glows (very low opacity), all fixed */
+  color: #e6e6e6;
+  font-family: "Victor Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient glows — same as before, but on their own fixed compositor layer.
+   Previously these lived on `body` with `background-attachment: fixed`, which
+   forces a full-viewport repaint on every scroll frame (desktop scroll jank).
+   A position:fixed pseudo-element is composited once and never repaints on
+   scroll. z-index -20 keeps it behind the starfield canvas (-z-10). */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -20;
+  pointer-events: none;
   background-image:
     radial-gradient(115% 55% at 50% -8%, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 55%),
     radial-gradient(42% 42% at 82% 12%, rgba(227,168,87,0.07) 0%, rgba(227,168,87,0) 70%),
     radial-gradient(46% 46% at 8% 78%, rgba(207,114,87,0.06) 0%, rgba(207,114,87,0) 70%),
     radial-gradient(40% 40% at 95% 88%, rgba(95,163,160,0.05) 0%, rgba(95,163,160,0) 70%);
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  color: #e6e6e6;
-  font-family: "Victor Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  letter-spacing: -0.01em;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
 }
 
 /* Experience carousel: the position dot "pops" when the timeline loops back to the start */
