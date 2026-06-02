@@ -20,21 +20,29 @@ export const PROJECTS: Project[] = [
     tags: ['RAG', 'Gemini API', 'Python', 'Flask', 'NumPy', 'Vercel'],
     architecture: {
       nodes: [
-        { id: 'browser', label: 'Browser', sublabel: 'Vanilla JS + Showdown', kind: 'client',  x: 320, y: 0   },
-        { id: 'flask',   label: 'Flask /api/chat', sublabel: 'Vercel Serverless', kind: 'server', x: 320, y: 180 },
-        { id: 'embed',   label: 'Gemini Embedding 001', sublabel: 'RETRIEVAL_QUERY', kind: 'service', x: 640, y: 70  },
-        { id: 'numpy',   label: 'NumPy cosine', sublabel: 'matmul vs. matrix', kind: 'process', x: 640, y: 180 },
-        { id: 'flash',   label: 'Gemini 2.5 Flash', sublabel: 'generate + guardrail', kind: 'service', x: 640, y: 290 },
-        { id: 'json',    label: 'embeddings.json', sublabel: 'normalized matrix', kind: 'data', x: 320, y: 380 },
-        { id: 'build',   label: 'build_index.py', sublabel: 'profile.md → chunks', kind: 'process', x: 320, y: 520 },
+        // ── Runtime RAG pipeline: query in (top-left) → answer out ──────────────
+        { id: 'browser', label: 'Browser', sublabel: 'Vanilla JS + Showdown', kind: 'client',  x: 40,  y: 160 },
+        { id: 'flask',   label: 'Flask /api/chat', sublabel: 'Vercel Serverless', kind: 'server', x: 300, y: 160 },
+        { id: 'embed',   label: 'Gemini Embedding', sublabel: 'embedding-001 · vector', kind: 'service', x: 620, y: 30  },
+        { id: 'numpy',   label: 'NumPy cosine', sublabel: 'similarity · top-3', kind: 'process', x: 620, y: 160 },
+        { id: 'flash',   label: 'Gemini 2.5 Flash', sublabel: 'context + query → answer', kind: 'service', x: 620, y: 290 },
+        // ── Offline index build: source of truth → vector store ────────────────
+        { id: 'json',    label: 'embeddings.json', sublabel: 'normalized matrix', kind: 'data', x: 300, y: 400 },
+        { id: 'build',   label: 'build_index.py', sublabel: 'chunk + embed', kind: 'process', x: 300, y: 530 },
+        { id: 'md',      label: 'profile.md', sublabel: 'source of truth', kind: 'data', x: 40, y: 530 },
       ],
       edges: [
+        // Runtime: browser asks, server orchestrates the RAG steps in order, answer returns
         { from: 'browser', to: 'flask', label: 'POST' },
-        { from: 'flask', to: 'embed',  label: '1 · embed' },
-        { from: 'flask', to: 'numpy',  label: '2 · retrieve' },
-        { from: 'flask', to: 'flash',  label: '4 · generate' },
-        { from: 'json',  to: 'numpy',  label: 'matrix · top-3' },
-        { from: 'build', to: 'json',   label: 'offline', dashed: true },
+        { from: 'flask',   to: 'embed', label: '1 · embed' },
+        { from: 'embed',   to: 'numpy', label: '2 · retrieve' },
+        { from: 'numpy',   to: 'flash', label: '3 · generate' },
+        { from: 'flash',   to: 'flask', label: '4 · answer', dashed: true },
+        { from: 'flask',   to: 'browser', label: 'reply', dashed: true },
+        // Offline: profile.md is chunked + embedded into the matrix that retrieval reads
+        { from: 'md',    to: 'build', label: 'chunk', dashed: true },
+        { from: 'build', to: 'json',  label: 'embed', dashed: true },
+        { from: 'json',  to: 'numpy', label: 'matrix', dashed: true },
       ],
     },
     links: [
