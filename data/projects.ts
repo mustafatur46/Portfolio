@@ -42,7 +42,7 @@ export const PROJECTS: Project[] = [
         // Offline: profile.md is chunked + embedded into the matrix that retrieval reads
         { from: 'md',    to: 'build', label: 'chunk', dashed: true },
         { from: 'build', to: 'json',  label: 'embed', dashed: true },
-        { from: 'json',  to: 'numpy', label: 'matrix', dashed: true },
+        { from: 'json',  to: 'numpy', dashed: true },
       ],
     },
     links: [
@@ -154,7 +154,7 @@ export const PROJECTS: Project[] = [
         { id: 'cv',    label: 'OpenCV Filter', sublabel: 'B/W + green mask', kind: 'process', x: 320, y: 60  },
         { id: 'agent', label: 'RL Agent', sublabel: 'DQN → PPO', kind: 'server',     x: 640, y: 60  },
         { id: 'track', label: 'Track Mapping', sublabel: 'frame-by-frame', kind: 'process', x: 320, y: 220 },
-        { id: 'poti',  label: 'Digital-Poti', sublabel: 'Speed 0–100', kind: 'client', x: 640, y: 240 },
+        { id: 'poti',  label: 'DigiPot', sublabel: 'Speed 0–100', kind: 'client', x: 640, y: 400 },
         { id: 'car',   label: 'Slot-Car', sublabel: 'physical track', kind: 'sim',    x: 40,  y: 400 },
       ],
       edges: [
