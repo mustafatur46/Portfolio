@@ -35,6 +35,14 @@ body {
 }
 .animate-dot-pop { animation: dot-pop 430ms cubic-bezier(0.2, 0.8, 0.3, 1); }
 
+/* Experience carousel: subtle settle on the card when the timeline loops */
+@keyframes card-pop {
+  0%   { transform: scale(0.97); }
+  60%  { transform: scale(1.008); }
+  100% { transform: scale(1); }
+}
+.animate-card-pop { animation: card-pop 340ms ease-out; }
+
 @layer utilities {
   /* Mono section heading — white, tight tracking */
   .section-title {

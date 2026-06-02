@@ -119,15 +119,18 @@ export default function Starfield() {
       mx = e.clientX / window.innerWidth - 0.5;
       my = e.clientY / window.innerHeight - 0.5;
     };
+    // Desktop follows the cursor; touch devices only nudge on tap (not on swipe).
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
+    const moveEvent = coarse ? 'click' : 'mousemove';
 
     resize();
     raf = requestAnimationFrame(draw);
     window.addEventListener('resize', resize);
-    window.addEventListener('mousemove', onMove, { passive: true });
+    window.addEventListener(moveEvent, onMove, { passive: true });
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', resize);
-      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener(moveEvent, onMove);
     };
   }, []);
 

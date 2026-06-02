@@ -21,6 +21,7 @@ export default function Experience() {
   // ── Mobile carousel state (stateless circular index → robust under rapid input) ─
   const [i, setI] = useState(0);                 // starts at the oldest entry (Abitur)
   const [popKey, setPopKey] = useState(0);
+  const [pulse, setPulse] = useState(false);
   const [barInstant, setBarInstant] = useState(false);
   const [cardH, setCardH] = useState(0);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -37,7 +38,13 @@ export default function Experience() {
     return o;
   };
 
-  const popDot = () => { setBarInstant(true); setPopKey(k => k + 1); setTimeout(() => setBarInstant(false), 60); };
+  const popDot = () => {
+    setBarInstant(true);
+    setPopKey(k => k + 1);
+    setPulse(true);
+    setTimeout(() => setBarInstant(false), 60);
+    setTimeout(() => setPulse(false), 360);
+  };
   const next = () => setI(p => { const ni = (p + 1) % n; if (ni === 0) popDot(); return ni; });          // loop → bar jumps + pop
   const prev = () => setI(p => { if (p === 0) popDot(); return (p - 1 + n) % n; });
   const goTo = (idx: number) => setI(idx);
@@ -176,7 +183,7 @@ export default function Experience() {
                   <div
                     ref={el => { cardRefs.current[idx] = el; }}
                     style={{ minHeight: cardH || undefined }}
-                    className={`flex flex-col justify-center bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-5 ${isC ? '' : 'pointer-events-none select-none'}`}
+                    className={`flex flex-col justify-center bg-white/[0.04] border border-white/[0.09] rounded-[14px] backdrop-blur-xl p-5 ${isC ? '' : 'pointer-events-none select-none'} ${pulse && isC ? 'animate-card-pop' : ''}`}
                   >
                     <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
                       <span

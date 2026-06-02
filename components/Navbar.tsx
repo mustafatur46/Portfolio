@@ -12,14 +12,24 @@ export default function Navbar() {
   const [active, setActive] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const hideRef = useRef(0);
+  const lastRef = useRef(0);
+  const pinnedRef = useRef(false);
 
-  // Gradual hide: bar is pushed up proportionally to downward scroll (clamped to
-  // its own height) and revealed on the way up. Initialised from scroll position.
+  // On (re)load, always land at the hero — not a restored position or #hash section.
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
+    if (window.location.hash) window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Gradual hide on scroll. After a nav-link click the bar stays pinned (visible)
+  // until the user scrolls by hand again — comfort when you mis-click a section.
   useEffect(() => {
     const el = navRef.current;
-    let last = window.scrollY;
-    let hide = Math.max(0, Math.min(NAV_H, window.scrollY));
-    const apply = () => { if (el) el.style.transform = `translateY(${-hide}px)`; };
+    lastRef.current = window.scrollY;
+    hideRef.current = Math.max(0, Math.min(NAV_H, window.scrollY));
+    const apply = () => { if (el) el.style.transform = `translateY(${-hideRef.current}px)`; };
     apply();
 
     let ticking = false;
@@ -29,16 +39,38 @@ export default function Navbar() {
       ticking = true;
       requestAnimationFrame(() => {
         const y = window.scrollY;
-        hide = Math.max(0, Math.min(NAV_H, hide + (y - last)));
-        if (y <= 0) hide = 0;
-        last = y;
+        if (pinnedRef.current) {                 // pinned after a nav click → stay visible
+          hideRef.current = 0;
+          lastRef.current = y;
+          apply();
+          ticking = false;
+          return;
+        }
+        hideRef.current = Math.max(0, Math.min(NAV_H, hideRef.current + (y - lastRef.current)));
+        if (y <= 0) hideRef.current = 0;
+        lastRef.current = y;
         apply();
         ticking = false;
       });
     };
+    const onUserScroll = () => { pinnedRef.current = false; };  // real gesture → resume hiding
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('wheel', onUserScroll, { passive: true });
+    window.addEventListener('touchmove', onUserScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('wheel', onUserScroll);
+      window.removeEventListener('touchmove', onUserScroll);
+    };
   }, []);
+
+  // Clicking a nav link pins the bar visible until the next manual scroll
+  const onNavClick = () => {
+    pinnedRef.current = true;
+    hideRef.current = 0;
+    if (navRef.current) navRef.current.style.transform = 'translateY(0px)';
+    setMenuOpen(false);
+  };
 
   // Scroll-spy: highlight the section currently in view
   useEffect(() => {
@@ -82,7 +114,7 @@ export default function Navbar() {
     >
       <div className="max-w-[1180px] mx-auto px-5 sm:px-6 h-full flex items-center justify-between gap-4">
         {/* Logo — compact monogram on mobile, stacked name on desktop */}
-        <a href="#hero" onClick={() => setMenuOpen(false)} className="no-underline shrink-0">
+        <a href="#hero" onClick={onNavClick} className="no-underline shrink-0">
           <span className="md:hidden text-[1.2rem] font-bold text-white tracking-tight">MT</span>
           <span className="hidden md:block leading-[0.95]">
             <span className="block text-[1rem] font-bold text-white tracking-tight">mustafa</span>
@@ -98,6 +130,7 @@ export default function Navbar() {
               <a
                 key={l.href}
                 href={l.href}
+                onClick={onNavClick}
                 className="px-3.5 py-1.5 rounded-full text-[0.84rem] transition-colors no-underline"
                 style={isActive ? { background: 'rgba(227,168,87,0.15)', color: '#e3a857' } : { color: '#888' }}
               >
@@ -137,7 +170,7 @@ export default function Navbar() {
                 <a
                   key={l.href}
                   href={l.href}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={onNavClick}
                   className="py-3 text-[0.95rem] border-b border-white/[0.05] no-underline transition-colors"
                   style={{ color: isActive ? '#e3a857' : '#bbb' }}
                 >
