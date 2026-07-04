@@ -8,8 +8,8 @@ export default function About() {
 
   const SKILLS = [
     { title: t.about.skillsLanguages, tags: ['Python', 'JavaScript', 'Java', 'C#', 'SQL', 'HTML / CSS'], accent: false },
-    { title: t.about.skillsAiMl, tags: ['RAG Pipelines', 'Reinforcement Learning', 'Embeddings', 'Prompt Engineering', 'Gemini API', 'NumPy · pandas · sklearn'], accent: true },
-    { title: t.about.skillsTools, tags: ['Flask · Django · Angular', 'React Native', 'Git · Docker', 'Power BI · Power Automate', 'Vercel', 'Cursor · VS Code · Claude Code'], accent: false },
+    { title: t.about.skillsAiMl, tags: ['RAG Pipelines', 'Reinforcement Learning', 'Embeddings', 'Prompt Engineering', 'Claude API', 'Gemini API', 'NumPy · pandas · sklearn'], accent: true },
+    { title: t.about.skillsTools, tags: ['Flask · Django · Angular', 'React Native', 'Git · Docker', 'Power BI · Power Automate', 'MCP', 'Vercel', 'Cursor · VS Code · Claude Code'], accent: false },
   ];
 
   return (
