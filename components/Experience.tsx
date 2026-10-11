@@ -11,6 +11,7 @@ const META = [
   { type: 'work' as const, companyUrl: 'https://www.beautify-app.de', tags: ['React Native', 'Echtzeit-Booking', 'Payment'] }, // Beautify
   { type: 'edu'  as const, tags: [] as string[] },                                   // Master
   { type: 'work' as const, tags: [] as string[] },                                   // DAPR Werkstudent
+  { type: 'work' as const, tags: [] as string[] },                                   // Feldhoff & Cie Werkstudent
 ] as const;
 
 export default function Experience() {

@@ -65,10 +65,16 @@
         "description": "Specialization: Artificial Intelligence."
       },
       {
-        "date": "May 2026 – present",
+        "date": "May 2026 – Sep 2026",
         "title": "Working Student, Process Optimization",
         "company": "Deutsches Institut für Interne Revision e.V.",
         "description": "Process optimization with IT means: analyzing, structuring and streamlining internal workflows — business analysis meets a software background."
+      },
+      {
+        "date": "Oct 2026 – present",
+        "title": "Working Student, Operations & Growth / AI Process Development",
+        "company": "Feldhoff & Cie",
+        "description": "Operations & growth: analyzing, automating and streamlining business processes. Heavy focus on AI and data engineering — building AI-powered flows and internal tools that make workflows scale."
       }
     ]
   },

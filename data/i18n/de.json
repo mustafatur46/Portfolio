@@ -65,10 +65,16 @@
         "description": "Spezialisierung: Künstliche Intelligenz."
       },
       {
-        "date": "Mai 2026 – heute",
+        "date": "Mai 2026 – Sep 2026",
         "title": "Werkstudent — Prozessoptimierung",
         "company": "Deutsches Institut für Interne Revision e.V.",
         "description": "Prozessoptimierung mit IT-Mitteln: interne Abläufe analysieren, strukturieren und effizienter gestalten — Business-Analyse trifft Software-Hintergrund."
+      },
+      {
+        "date": "Okt 2026 – heute",
+        "title": "Werkstudent — Operations & Growth / AI Process Development",
+        "company": "Feldhoff & Cie",
+        "description": "Operations & Growth: Geschäftsprozesse analysieren, automatisieren und effizienter gestalten. Starker Fokus auf AI und Data Engineering — ich entwickle KI-gestützte Flows und interne Tools, die Abläufe skalierbar machen."
       }
     ]
   },
