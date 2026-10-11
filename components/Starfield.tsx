@@ -34,7 +34,7 @@ export default function Starfield() {
     type Shooter = { x: number; y: number; vx: number; vy: number; life: number; max: number };
     type Hole = { x: number; y: number; kind: 'devour' | 'portal'; start: number; dur: number; closeAt?: number };
     let stars: Star[] = [];
-    let shooters: Shooter[] = [];
+    const shooters: Shooter[] = [];
     let hole: Hole | null = null;
     let pulling = 0; // stars currently being pulled in (from the last frame)
 

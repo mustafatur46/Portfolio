@@ -167,6 +167,18 @@ function TimeAxis({ active, setActive, onPick, labels, compact = false }: {
   );
 }
 
+function CarouselArrow({ onClick, glyph }: { onClick: () => void; glyph: '‹' | '›' }) {
+  return (
+    <button
+      onClick={onClick}
+      aria-label={glyph === '‹' ? 'Previous' : 'Next'}
+      className="w-9 h-9 flex items-center justify-center rounded-full border border-white/[0.12] bg-white/[0.04] text-[#bbb] text-[1.3rem] leading-none hover:text-white hover:border-white/30 transition-colors"
+    >
+      {glyph}
+    </button>
+  );
+}
+
 export default function Experience() {
   const { t } = useI18n();
   const items = t.experience.items.map((txt, idx) => ({ ...META[idx], ...txt }));
@@ -175,8 +187,6 @@ export default function Experience() {
   // ── Mobile carousel state (stateless circular index → robust under rapid input) ─
   const [i, setI] = useState(0);                 // starts at the oldest entry (Abitur)
   const [pulse, setPulse] = useState(false);
-  const [cardH, setCardH] = useState(0);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const touchX = useRef(0);
 
   // shortest circular offset of a card from the current index
@@ -195,24 +205,6 @@ export default function Experience() {
   const next = () => setI(p => { const ni = (p + 1) % n; if (ni === 0) wrapPulse(); return ni; });
   const prev = () => setI(p => { if (p === 0) wrapPulse(); return (p - 1 + n) % n; });
   const goTo = (idx: number) => setI(idx);
-
-  // Measure the tallest card once per language so the slot never clips
-  useEffect(() => { setCardH(0); }, [t]);
-  useEffect(() => {
-    if (cardH !== 0) return;
-    const max = Math.max(0, ...cardRefs.current.map(el => el?.offsetHeight ?? 0));
-    if (max) setCardH(max);
-  }, [cardH, t]);
-
-  const Arrow = ({ onClick, glyph }: { onClick: () => void; glyph: '‹' | '›' }) => (
-    <button
-      onClick={onClick}
-      aria-label={glyph === '‹' ? 'Previous' : 'Next'}
-      className="w-9 h-9 flex items-center justify-center rounded-full border border-white/[0.12] bg-white/[0.04] text-[#bbb] text-[1.3rem] leading-none hover:text-white hover:border-white/30 transition-colors"
-    >
-      {glyph}
-    </button>
-  );
 
   // ── Desktop: time axis + gallery of compact tiles (newest first). `active` is the
   // hover link bar ↔ tile; `open` is the one tile showing its details (click on a
@@ -352,9 +344,11 @@ export default function Experience() {
             labels={{ work: t.experience.work, education: t.experience.education, today: t.experience.today }}
           />
 
+          {/* every card sits in the same grid cell, so the slot is always as tall as
+              the tallest card (in either language) without measuring anything */}
           <div
-            className="relative overflow-hidden"
-            style={{ height: cardH || undefined, ['--cw' as string]: 'clamp(210px, 62vw, 760px)' }}
+            className="grid overflow-hidden"
+            style={{ ['--cw' as string]: 'clamp(210px, 62vw, 760px)' }}
             onTouchStart={e => { touchX.current = e.touches[0].clientX; }}
             onTouchEnd={e => {
               const dx = e.changedTouches[0].clientX - touchX.current;
@@ -370,10 +364,10 @@ export default function Experience() {
                 <div
                   key={idx}
                   onClick={() => { if (off === 1) next(); else if (off === -1) prev(); }}
-                  className={`absolute top-0 left-1/2 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.2,0.7,0.2,1)] ${isC ? '' : 'cursor-pointer'}`}
+                  className={`[grid-area:1/1] justify-self-center transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.2,0.7,0.2,1)] ${isC ? '' : 'cursor-pointer'}`}
                   style={{
                     width: 'var(--cw)',
-                    transform: `translateX(calc(-50% + ${off} * (var(--cw) + 1rem)))`,
+                    transform: `translateX(calc(${off} * (var(--cw) + 1rem)))`,
                     opacity: isC ? 1 : Math.abs(off) === 1 ? 0.42 : 0,
                     zIndex: isC ? 2 : 1,
                     // Far cards are fully invisible — skip their paint entirely; only
@@ -384,11 +378,9 @@ export default function Experience() {
                   }}
                 >
                   <div
-                    ref={el => { cardRefs.current[idx] = el; }}
-                    style={{ minHeight: cardH || undefined }}
                     // backdrop-blur only on the center card: blurring a moving element is
                     // the main GPU cost, and on the dimmed side cards it's imperceptible.
-                    className={`flex flex-col justify-center bg-white/[0.04] border border-white/[0.09] rounded-[14px] p-5 ${isC ? 'backdrop-blur-xl' : ''} ${isC ? '' : 'pointer-events-none select-none'} ${pulse && isC ? 'animate-card-pop' : ''}`}
+                    className={`h-full flex flex-col justify-center bg-white/[0.04] border border-white/[0.09] rounded-[14px] p-5 ${isC ? 'backdrop-blur-xl' : ''} ${isC ? '' : 'pointer-events-none select-none'} ${pulse && isC ? 'animate-card-pop' : ''}`}
                   >
                     <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
                       <span
@@ -427,11 +419,11 @@ export default function Experience() {
           </div>
 
           <div className="flex items-center justify-center gap-5 mt-5">
-            <Arrow onClick={prev} glyph="‹" />
+            <CarouselArrow onClick={prev} glyph="‹" />
             <span className="text-[0.8rem] font-mono text-[#666] tabular-nums">
               {String(i + 1).padStart(2, '0')} / {String(n).padStart(2, '0')}
             </span>
-            <Arrow onClick={next} glyph="›" />
+            <CarouselArrow onClick={next} glyph="›" />
           </div>
         </div>
       </div>

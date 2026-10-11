@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useSyncExternalStore } from 'react';
 import de from '@/data/i18n/de.json';
 import en from '@/data/i18n/en.json';
 
@@ -26,19 +26,34 @@ interface Ctx {
 
 const LanguageContext = createContext<Ctx>({ lang: 'de', setLang: () => {}, t: de });
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<Lang>('de');
+// The chosen language lives in localStorage; React reads it as an external
+// store. The server snapshot is 'de', so hydration matches and the saved
+// choice is applied right after.
+const LANG_EVENT = 'lang-change';
+let memLang: Lang = 'de'; // fallback when storage is blocked, so switching still works
+const readLang = (): Lang => {
+  try {
+    const v = localStorage.getItem('lang');
+    return v === 'en' || v === 'de' ? v : memLang;
+  } catch { return memLang; }
+};
+const subscribeLang = (cb: () => void) => {
+  window.addEventListener(LANG_EVENT, cb);
+  window.addEventListener('storage', cb); // other tabs
+  return () => {
+    window.removeEventListener(LANG_EVENT, cb);
+    window.removeEventListener('storage', cb);
+  };
+};
 
-  // Restore persisted choice after mount (server renders 'de' to avoid hydration mismatch)
-  useEffect(() => {
-    const saved = localStorage.getItem('lang');
-    if (saved === 'en' || saved === 'de') setLangState(saved);
-  }, []);
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const lang = useSyncExternalStore(subscribeLang, readLang, () => 'de' as Lang);
 
   const setLang = (l: Lang) => {
-    setLangState(l);
+    memLang = l;
     try { localStorage.setItem('lang', l); } catch {}
     document.documentElement.lang = l;
+    window.dispatchEvent(new Event(LANG_EVENT));
   };
 
   return (
