@@ -8,6 +8,7 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Starfield from '@/components/Starfield';
 import Cursor from '@/components/Cursor';
+import SpaceVisitors from '@/components/SpaceVisitors';
 import { LanguageProvider } from '@/components/i18n';
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="de">
       <body className="min-h-screen bg-black text-[#e6e6e6]">
         <Starfield />
+        <SpaceVisitors />
         <Cursor />
         <LanguageProvider>
         <Navbar />

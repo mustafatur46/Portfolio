@@ -15,7 +15,10 @@ export default function Hero() {
           Mustafa Turhal
         </p>
 
-        <h1 className="section-title leading-[1.08] sm:leading-[1.04] mb-4 sm:mb-6 text-[2.05rem] sm:text-[2.7rem] md:text-[clamp(2.6rem,7vw,5rem)]">
+        <h1
+          data-sky-avoid
+          className="section-title leading-[1.08] sm:leading-[1.04] mb-4 sm:mb-6 text-[2.05rem] sm:text-[2.7rem] md:text-[clamp(2.6rem,7vw,5rem)] w-fit -mx-3 px-3 sm:-mx-5 sm:px-5 py-1.5 sm:py-2 rounded-2xl bg-black/40 backdrop-blur-[3px] border border-white/[0.05]"
+        >
           {t.hero.headline}{' '}
           <span className="accent-italic">{t.hero.headlineAccent}</span>
         </h1>

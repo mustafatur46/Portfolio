@@ -38,14 +38,6 @@ body::before {
   background-repeat: no-repeat;
 }
 
-/* Experience carousel: the position dot "pops" when the timeline loops back to the start */
-@keyframes dot-pop {
-  0%   { transform: scale(0.55); box-shadow: 0 0 0 0 rgba(227,168,87,0); }
-  45%  { transform: scale(1.95); box-shadow: 0 0 14px 5px rgba(227,168,87,0.6); }
-  100% { transform: scale(1);    box-shadow: 0 0 10px 3px rgba(227,168,87,0.45); }
-}
-.animate-dot-pop { animation: dot-pop 430ms cubic-bezier(0.2, 0.8, 0.3, 1); }
-
 /* Experience carousel: subtle settle on the card when the timeline loops */
 @keyframes card-pop {
   0%   { transform: scale(0.97); }
@@ -144,6 +136,44 @@ html { scrollbar-color: rgba(227,168,87,0.45) transparent; scrollbar-width: thin
   border-radius: 2px;
   background: linear-gradient(to bottom, rgba(227,168,87,0.85), rgba(227,168,87,0));
 }
+
+/* Easter-egg visitors (components/SpaceVisitors.tsx) */
+@keyframes rocket-flame {
+  0%, 100% { transform: scaleY(1)    scaleX(1); }
+  50%      { transform: scaleY(0.7)  scaleX(0.88); }
+}
+.rocket-flame {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: rocket-flame 110ms ease-in-out infinite;
+}
+@keyframes rocket-puff {
+  0%   { transform: translateY(0)    scale(0.6); opacity: 0.75; }
+  100% { transform: translateY(26px) scale(2);   opacity: 0; }
+}
+.rocket-puffs circle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: rocket-puff 600ms ease-out infinite;
+}
+.rocket-puffs circle:nth-child(2) { animation-delay: -200ms; }
+.rocket-puffs circle:nth-child(3) { animation-delay: -400ms; }
+@keyframes astro-wave {
+  0%, 100% { transform: rotate(-22deg); }
+  50%      { transform: rotate(-52deg); }
+}
+.astro-wave { animation: astro-wave 1.6s ease-in-out infinite; }
+@keyframes astro-blink {
+  0%, 70%, 100% { opacity: 1; }
+  80%           { opacity: 0.25; }
+}
+.astro-blink { animation: astro-blink 2.2s linear infinite; }
+@keyframes ufo-light {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.2; }
+}
+.ufo-lights circle { animation: ufo-light 500ms steps(1) infinite; }
+.ufo-lights circle:nth-child(even) { animation-delay: -250ms; }
 
 @layer utilities {
   .animate-pulse-ring {
