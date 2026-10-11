@@ -29,14 +29,25 @@ export default function SpaceVisitors() {
     let busy = false;
     let alive = true;
 
-    // True if any text-bearing element sits on top of (x, y). Our layer is
-    // pointer-events:none, so elementFromPoint returns the content above it.
-    const TEXT_SEL = 'h1,h2,h3,h4,p,a,button,li,label,input,textarea,code,pre';
+    // True if text sits on top of (x, y). Our layer is pointer-events:none, so
+    // elementFromPoint returns the content above it. For running text we test
+    // the actual line boxes, not the element's box, so a visitor only dims while
+    // it is really behind a line (and stays visible between lines / in padding).
+    // Controls (buttons, inputs) count as a whole.
+    const TEXT_SEL = 'h1,h2,h3,h4,p,a,li,label,code,pre';
+    const BOX_SEL = 'button,input,textarea';
+    const range = document.createRange();
+    const onLine = (el: Element, x: number, y: number) => {
+      range.selectNodeContents(el);
+      return Array.from(range.getClientRects()).some(q => x >= q.left - 4 && x <= q.right + 4 && y >= q.top - 2 && y <= q.bottom + 2);
+    };
     const textAt = (x: number, y: number) => {
       const el = document.elementFromPoint(x, y);
       if (!el) return false;
-      if (el.closest(TEXT_SEL)) return true;
-      return Array.from(el.childNodes).some(n => n.nodeType === Node.TEXT_NODE && n.textContent?.trim());
+      if (el.closest(BOX_SEL)) return true;
+      const host = el.closest(TEXT_SEL)
+        ?? (Array.from(el.childNodes).some(n => n.nodeType === Node.TEXT_NODE && n.textContent?.trim()) ? el : null);
+      return host ? onLine(host, x, y) : false;
     };
 
     // Drive one element along frame(u, seconds) for `dur` ms, then hide it.
